@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.home.cn.mapper.HomeDictionaryCountyCityMapper" >
+  <resultMap id="BaseResultMap" type="com.home.cn.model.HomeDictionaryCountyCity" >
+    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+    <result column="code" property="code" jdbcType="VARCHAR" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="superior_code" property="superiorCode" jdbcType="VARCHAR" />
+    <result column="eff_start_time" property="effStartTime" jdbcType="TIMESTAMP" />
+    <result column="eff_end_time" property="effEndTime" jdbcType="TIMESTAMP" />
+    <result column="corp_id" property="corpId" jdbcType="BIGINT" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, code, name, superior_code, eff_start_time, eff_end_time, corp_id, creator, 
+    creat_time, modifier, modify_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.home.cn.model.HomeDictionaryCountyCityExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from home_dictionary_county_city
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from home_dictionary_county_city
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from home_dictionary_county_city
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.home.cn.model.HomeDictionaryCountyCityExample" >
+    delete from home_dictionary_county_city
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.home.cn.model.HomeDictionaryCountyCity" >
+    insert into home_dictionary_county_city (uuid, code, name, 
+      superior_code, eff_start_time, eff_end_time, 
+      corp_id, creator, creat_time, 
+      modifier, modify_time)
+    values (#{uuid,jdbcType=BIGINT}, #{code,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR}, 
+      #{superiorCode,jdbcType=VARCHAR}, #{effStartTime,jdbcType=TIMESTAMP}, #{effEndTime,jdbcType=TIMESTAMP}, 
+      #{corpId,jdbcType=BIGINT}, #{creator,jdbcType=BIGINT}, #{creatTime,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.home.cn.model.HomeDictionaryCountyCity" >
+    insert into home_dictionary_county_city
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="code != null" >
+        code,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="superiorCode != null" >
+        superior_code,
+      </if>
+      <if test="effStartTime != null" >
+        eff_start_time,
+      </if>
+      <if test="effEndTime != null" >
+        eff_end_time,
+      </if>
+      <if test="corpId != null" >
+        corp_id,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="code != null" >
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="superiorCode != null" >
+        #{superiorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="effStartTime != null" >
+        #{effStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effEndTime != null" >
+        #{effEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="corpId != null" >
+        #{corpId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.home.cn.model.HomeDictionaryCountyCityExample" resultType="java.lang.Integer" >
+    select count(*) from home_dictionary_county_city
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update home_dictionary_county_city
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.code != null" >
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.superiorCode != null" >
+        superior_code = #{record.superiorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effStartTime != null" >
+        eff_start_time = #{record.effStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.effEndTime != null" >
+        eff_end_time = #{record.effEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.corpId != null" >
+        corp_id = #{record.corpId,jdbcType=BIGINT},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=BIGINT},
+      </if>
+      <if test="record.creatTime != null" >
+        creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifier != null" >
+        modifier = #{record.modifier,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyTime != null" >
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update home_dictionary_county_city
+    set uuid = #{record.uuid,jdbcType=BIGINT},
+      code = #{record.code,jdbcType=VARCHAR},
+      name = #{record.name,jdbcType=VARCHAR},
+      superior_code = #{record.superiorCode,jdbcType=VARCHAR},
+      eff_start_time = #{record.effStartTime,jdbcType=TIMESTAMP},
+      eff_end_time = #{record.effEndTime,jdbcType=TIMESTAMP},
+      corp_id = #{record.corpId,jdbcType=BIGINT},
+      creator = #{record.creator,jdbcType=BIGINT},
+      creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      modifier = #{record.modifier,jdbcType=BIGINT},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.home.cn.model.HomeDictionaryCountyCity" >
+    update home_dictionary_county_city
+    <set >
+      <if test="code != null" >
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="superiorCode != null" >
+        superior_code = #{superiorCode,jdbcType=VARCHAR},
+      </if>
+      <if test="effStartTime != null" >
+        eff_start_time = #{effStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effEndTime != null" >
+        eff_end_time = #{effEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="corpId != null" >
+        corp_id = #{corpId,jdbcType=BIGINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.home.cn.model.HomeDictionaryCountyCity" >
+    update home_dictionary_county_city
+    set code = #{code,jdbcType=VARCHAR},
+      name = #{name,jdbcType=VARCHAR},
+      superior_code = #{superiorCode,jdbcType=VARCHAR},
+      eff_start_time = #{effStartTime,jdbcType=TIMESTAMP},
+      eff_end_time = #{effEndTime,jdbcType=TIMESTAMP},
+      corp_id = #{corpId,jdbcType=BIGINT},
+      creator = #{creator,jdbcType=BIGINT},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+  <select id="query" resultMap="BaseResultMap" parameterType="com.home.cn.param.HomeDictionaryCountyCityParam">
+  		select <include refid="Base_Column_List" /> from home_dictionary_county_city where 1 = 1 
+  	  <if test="uuid != null" >
+        and UUID = #{uuid,jdbcType=BIGINT} 
+      </if>
+      <if test="code != null" >
+        and code = #{code,jdbcType=VARCHAR}
+      </if>
+      <if test="name != null" >
+        and name = #{name,jdbcType=VARCHAR}
+      </if>
+      <if test="superiorCode != null" >
+        and superior_code = #{superiorCode,jdbcType=VARCHAR}
+      </if>
+  </select>
+</mapper>

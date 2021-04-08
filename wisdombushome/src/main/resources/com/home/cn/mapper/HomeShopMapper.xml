@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.home.cn.mapper.HomeShopMapper" >
+  <resultMap id="BaseResultMap" type="com.home.cn.model.HomeShop" >
+    <id column="shop_id" property="shopId" jdbcType="BIGINT" />
+    <result column="shop_name" property="shopName" jdbcType="VARCHAR" />
+    <result column="shop_addr" property="shopAddr" jdbcType="VARCHAR" />
+    <result column="shop_scope" property="shopScope" jdbcType="VARCHAR" />
+    <result column="shop_leader" property="shopLeader" jdbcType="VARCHAR" />
+    <result column="shop_leader_phone" property="shopLeaderPhone" jdbcType="VARCHAR" />
+    <result column="shop_contact" property="shopContact" jdbcType="VARCHAR" />
+    <result column="logo" property="logo" jdbcType="VARCHAR" />
+    <result column="shop_remark" property="shopRemark" jdbcType="VARCHAR" />
+    <result column="effect_start_time" property="effectStartTime" jdbcType="TIMESTAMP" />
+    <result column="effect_end_time" property="effectEndTime" jdbcType="TIMESTAMP" />
+    <result column="plot_code" property="plotCode" jdbcType="BIGINT" />
+    <result column="plot_name" property="plotName" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    shop_id, shop_name, shop_addr, shop_scope, shop_leader, shop_leader_phone, shop_contact, 
+    logo, shop_remark, effect_start_time, effect_end_time, plot_code, plot_name, creator, 
+    creat_time, modifier, modify_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.home.cn.model.HomeShopExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from home_shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from home_shop
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from home_shop
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.home.cn.model.HomeShopExample" >
+    delete from home_shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.home.cn.model.HomeShop" >
+    insert into home_shop (shop_id, shop_name, shop_addr, 
+      shop_scope, shop_leader, shop_leader_phone, 
+      shop_contact, logo, shop_remark, 
+      effect_start_time, effect_end_time, plot_code, 
+      plot_name, creator, creat_time, 
+      modifier, modify_time)
+    values (#{shopId,jdbcType=BIGINT}, #{shopName,jdbcType=VARCHAR}, #{shopAddr,jdbcType=VARCHAR}, 
+      #{shopScope,jdbcType=VARCHAR}, #{shopLeader,jdbcType=VARCHAR}, #{shopLeaderPhone,jdbcType=VARCHAR}, 
+      #{shopContact,jdbcType=VARCHAR}, #{logo,jdbcType=VARCHAR}, #{shopRemark,jdbcType=VARCHAR}, 
+      #{effectStartTime,jdbcType=TIMESTAMP}, #{effectEndTime,jdbcType=TIMESTAMP}, #{plotCode,jdbcType=BIGINT}, 
+      #{plotName,jdbcType=VARCHAR}, #{creator,jdbcType=BIGINT}, #{creatTime,jdbcType=TIMESTAMP}, 
+      #{modifier,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.home.cn.model.HomeShop" >
+    insert into home_shop
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="shopName != null" >
+        shop_name,
+      </if>
+      <if test="shopAddr != null" >
+        shop_addr,
+      </if>
+      <if test="shopScope != null" >
+        shop_scope,
+      </if>
+      <if test="shopLeader != null" >
+        shop_leader,
+      </if>
+      <if test="shopLeaderPhone != null" >
+        shop_leader_phone,
+      </if>
+      <if test="shopContact != null" >
+        shop_contact,
+      </if>
+      <if test="logo != null" >
+        logo,
+      </if>
+      <if test="shopRemark != null" >
+        shop_remark,
+      </if>
+      <if test="effectStartTime != null" >
+        effect_start_time,
+      </if>
+      <if test="effectEndTime != null" >
+        effect_end_time,
+      </if>
+      <if test="plotCode != null" >
+        plot_code,
+      </if>
+      <if test="plotName != null" >
+        plot_name,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="shopId != null" >
+        #{shopId,jdbcType=BIGINT},
+      </if>
+      <if test="shopName != null" >
+        #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddr != null" >
+        #{shopAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="shopScope != null" >
+        #{shopScope,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLeader != null" >
+        #{shopLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLeaderPhone != null" >
+        #{shopLeaderPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopContact != null" >
+        #{shopContact,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopRemark != null" >
+        #{shopRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="effectStartTime != null" >
+        #{effectStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectEndTime != null" >
+        #{effectEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="plotCode != null" >
+        #{plotCode,jdbcType=BIGINT},
+      </if>
+      <if test="plotName != null" >
+        #{plotName,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.home.cn.model.HomeShopExample" resultType="java.lang.Integer" >
+    select count(*) from home_shop
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update home_shop
+    <set >
+      <if test="record.shopId != null" >
+        shop_id = #{record.shopId,jdbcType=BIGINT},
+      </if>
+      <if test="record.shopName != null" >
+        shop_name = #{record.shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopAddr != null" >
+        shop_addr = #{record.shopAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopScope != null" >
+        shop_scope = #{record.shopScope,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopLeader != null" >
+        shop_leader = #{record.shopLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopLeaderPhone != null" >
+        shop_leader_phone = #{record.shopLeaderPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopContact != null" >
+        shop_contact = #{record.shopContact,jdbcType=VARCHAR},
+      </if>
+      <if test="record.logo != null" >
+        logo = #{record.logo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopRemark != null" >
+        shop_remark = #{record.shopRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effectStartTime != null" >
+        effect_start_time = #{record.effectStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.effectEndTime != null" >
+        effect_end_time = #{record.effectEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.plotCode != null" >
+        plot_code = #{record.plotCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.plotName != null" >
+        plot_name = #{record.plotName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=BIGINT},
+      </if>
+      <if test="record.creatTime != null" >
+        creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifier != null" >
+        modifier = #{record.modifier,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyTime != null" >
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update home_shop
+    set shop_id = #{record.shopId,jdbcType=BIGINT},
+      shop_name = #{record.shopName,jdbcType=VARCHAR},
+      shop_addr = #{record.shopAddr,jdbcType=VARCHAR},
+      shop_scope = #{record.shopScope,jdbcType=VARCHAR},
+      shop_leader = #{record.shopLeader,jdbcType=VARCHAR},
+      shop_leader_phone = #{record.shopLeaderPhone,jdbcType=VARCHAR},
+      shop_contact = #{record.shopContact,jdbcType=VARCHAR},
+      logo = #{record.logo,jdbcType=VARCHAR},
+      shop_remark = #{record.shopRemark,jdbcType=VARCHAR},
+      effect_start_time = #{record.effectStartTime,jdbcType=TIMESTAMP},
+      effect_end_time = #{record.effectEndTime,jdbcType=TIMESTAMP},
+      plot_code = #{record.plotCode,jdbcType=BIGINT},
+      plot_name = #{record.plotName,jdbcType=VARCHAR},
+      creator = #{record.creator,jdbcType=BIGINT},
+      creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      modifier = #{record.modifier,jdbcType=BIGINT},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.home.cn.model.HomeShop" >
+    update home_shop
+    <set >
+      <if test="shopName != null" >
+        shop_name = #{shopName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopAddr != null" >
+        shop_addr = #{shopAddr,jdbcType=VARCHAR},
+      </if>
+      <if test="shopScope != null" >
+        shop_scope = #{shopScope,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLeader != null" >
+        shop_leader = #{shopLeader,jdbcType=VARCHAR},
+      </if>
+      <if test="shopLeaderPhone != null" >
+        shop_leader_phone = #{shopLeaderPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="shopContact != null" >
+        shop_contact = #{shopContact,jdbcType=VARCHAR},
+      </if>
+      <if test="logo != null" >
+        logo = #{logo,jdbcType=VARCHAR},
+      </if>
+      <if test="shopRemark != null" >
+        shop_remark = #{shopRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="effectStartTime != null" >
+        effect_start_time = #{effectStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effectEndTime != null" >
+        effect_end_time = #{effectEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="plotCode != null" >
+        plot_code = #{plotCode,jdbcType=BIGINT},
+      </if>
+      <if test="plotName != null" >
+        plot_name = #{plotName,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.home.cn.model.HomeShop" >
+    update home_shop
+    set shop_name = #{shopName,jdbcType=VARCHAR},
+      shop_addr = #{shopAddr,jdbcType=VARCHAR},
+      shop_scope = #{shopScope,jdbcType=VARCHAR},
+      shop_leader = #{shopLeader,jdbcType=VARCHAR},
+      shop_leader_phone = #{shopLeaderPhone,jdbcType=VARCHAR},
+      shop_contact = #{shopContact,jdbcType=VARCHAR},
+      logo = #{logo,jdbcType=VARCHAR},
+      shop_remark = #{shopRemark,jdbcType=VARCHAR},
+      effect_start_time = #{effectStartTime,jdbcType=TIMESTAMP},
+      effect_end_time = #{effectEndTime,jdbcType=TIMESTAMP},
+      plot_code = #{plotCode,jdbcType=BIGINT},
+      plot_name = #{plotName,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=BIGINT},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where shop_id = #{shopId,jdbcType=BIGINT}
+  </update>
+    <select id="query" resultMap="BaseResultMap" parameterType="com.home.cn.param.HomeShopParam">
+  		select <include refid="Base_Column_List" /> from home_shop where 1 = 1 
+  	  <if test="shopId != null" >
+        and shop_id = #{shopId,jdbcType=BIGINT} 
+      </if>
+      <if test="shopName != null" >
+        and shop_name = #{shopName,jdbcType=VARCHAR}
+      </if>
+      <if test="plotCode != null" >
+        and plot_code = #{plotCode,jdbcType=BIGINT}
+      </if>
+      <if test="plotName != null" >
+        and plot_name = #{plotName,jdbcType=VARCHAR}
+      </if>
+      <if test="creator != null" >
+        and creator = #{creator,jdbcType=BIGINT}
+      </if>
+      </select>
+</mapper>

@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.home.cn.mapper.HomeHousingAttaMapper" >
+  <resultMap id="BaseResultMap" type="com.home.cn.model.HomeHousingAtta" >
+    <id column="UUID" property="uuid" jdbcType="BIGINT" />
+    <result column="form_id" property="formId" jdbcType="BIGINT" />
+    <result column="atta_type" property="attaType" jdbcType="SMALLINT" />
+    <result column="atta_url" property="attaUrl" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UUID, form_id, atta_type, atta_url
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.home.cn.model.HomeHousingAttaExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from home_housing_atta
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from home_housing_atta
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from home_housing_atta
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.home.cn.model.HomeHousingAttaExample" >
+    delete from home_housing_atta
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.home.cn.model.HomeHousingAtta" >
+    insert into home_housing_atta (UUID, form_id, atta_type, 
+      atta_url)
+    values (#{uuid,jdbcType=BIGINT}, #{formId,jdbcType=BIGINT}, #{attaType,jdbcType=SMALLINT}, 
+      #{attaUrl,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.home.cn.model.HomeHousingAtta" >
+    insert into home_housing_atta
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="formId != null" >
+        form_id,
+      </if>
+      <if test="attaType != null" >
+        atta_type,
+      </if>
+      <if test="attaUrl != null" >
+        atta_url,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="formId != null" >
+        #{formId,jdbcType=BIGINT},
+      </if>
+      <if test="attaType != null" >
+        #{attaType,jdbcType=SMALLINT},
+      </if>
+      <if test="attaUrl != null" >
+        #{attaUrl,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.home.cn.model.HomeHousingAttaExample" resultType="java.lang.Integer" >
+    select count(*) from home_housing_atta
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update home_housing_atta
+    <set >
+      <if test="record.uuid != null" >
+        UUID = #{record.uuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.formId != null" >
+        form_id = #{record.formId,jdbcType=BIGINT},
+      </if>
+      <if test="record.attaType != null" >
+        atta_type = #{record.attaType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.attaUrl != null" >
+        atta_url = #{record.attaUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update home_housing_atta
+    set UUID = #{record.uuid,jdbcType=BIGINT},
+      form_id = #{record.formId,jdbcType=BIGINT},
+      atta_type = #{record.attaType,jdbcType=SMALLINT},
+      atta_url = #{record.attaUrl,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.home.cn.model.HomeHousingAtta" >
+    update home_housing_atta
+    <set >
+      <if test="formId != null" >
+        form_id = #{formId,jdbcType=BIGINT},
+      </if>
+      <if test="attaType != null" >
+        atta_type = #{attaType,jdbcType=SMALLINT},
+      </if>
+      <if test="attaUrl != null" >
+        atta_url = #{attaUrl,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.home.cn.model.HomeHousingAtta" >
+    update home_housing_atta
+    set form_id = #{formId,jdbcType=BIGINT},
+      atta_type = #{attaType,jdbcType=SMALLINT},
+      atta_url = #{attaUrl,jdbcType=VARCHAR}
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <select id="query" resultMap="BaseResultMap" parameterType="com.home.cn.param.HomeHousingAttaParam">
+  		select <include refid="Base_Column_List" /> from home_housing_atta where 1 = 1 
+  	  <if test="uuid != null" >
+        and UUID = #{uuid,jdbcType=BIGINT} 
+      </if>
+      <if test="formId != null" >
+        and form_id = #{formId,jdbcType=BIGINT}
+      </if>
+      <if test="attaType != null" >
+        and atta_type = #{attaType,jdbcType=SMALLINT}
+      </if>
+  </select>
+</mapper>

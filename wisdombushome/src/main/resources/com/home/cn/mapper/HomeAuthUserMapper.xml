@@ -1,0 +1,579 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.home.cn.mapper.HomeAuthUserMapper" >
+  <resultMap id="BaseResultMap" type="com.home.cn.model.HomeAuthUser" >
+    <id column="uuid" property="uuid" jdbcType="BIGINT" />
+    <result column="login_name" property="loginName" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="salt_density_value" property="saltDensityValue" jdbcType="VARCHAR" />
+    <result column="plot_code" property="plotCode" jdbcType="BIGINT" />
+    <result column="plot_name" property="plotName" jdbcType="VARCHAR" />
+    <result column="shop_id" property="shopId" jdbcType="VARCHAR" />
+    <result column="user_type" property="userType" jdbcType="SMALLINT" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="mobile_phone" property="mobilePhone" jdbcType="VARCHAR" />
+    <result column="user_status" property="userStatus" jdbcType="SMALLINT" />
+    <result column="date_from" property="dateFrom" jdbcType="VARCHAR" />
+    <result column="date_to" property="dateTo" jdbcType="VARCHAR" />
+    <result column="activedate" property="activedate" jdbcType="VARCHAR" />
+    <result column="enddate" property="enddate" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="time_created" property="timeCreated" jdbcType="VARCHAR" />
+    <result column="who_modified" property="whoModified" jdbcType="BIGINT" />
+    <result column="time_modified" property="timeModified" jdbcType="VARCHAR" />
+    <result column="channel" property="channel" jdbcType="VARCHAR" />
+    <result column="source" property="source" jdbcType="VARCHAR" />
+    <result column="user_img" property="userImg" jdbcType="VARCHAR" />
+    <result column="user_ext2" property="userExt2" jdbcType="VARCHAR" />
+    <result column="user_ext3" property="userExt3" jdbcType="VARCHAR" />
+    <result column="user_ext4" property="userExt4" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    uuid, login_name, user_name, password, salt_density_value, plot_code, plot_name, 
+    shop_id, user_type, email, mobile_phone, user_status, date_from, date_to, activedate, 
+    enddate, creator, time_created, who_modified, time_modified, channel, source, user_img, 
+    user_ext2, user_ext3, user_ext4
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.home.cn.model.HomeAuthUserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from home_auth_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from home_auth_user
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from home_auth_user
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.home.cn.model.HomeAuthUserExample" >
+    delete from home_auth_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.home.cn.model.HomeAuthUser" >
+    insert into home_auth_user (uuid, login_name, user_name, 
+      password, salt_density_value, plot_code, 
+      plot_name, shop_id, user_type, 
+      email, mobile_phone, user_status, 
+      date_from, date_to, activedate, 
+      enddate, creator, time_created, 
+      who_modified, time_modified, channel, 
+      source, user_img, user_ext2, 
+      user_ext3, user_ext4)
+    values (#{uuid,jdbcType=BIGINT}, #{loginName,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{saltDensityValue,jdbcType=VARCHAR}, #{plotCode,jdbcType=BIGINT}, 
+      #{plotName,jdbcType=VARCHAR}, #{shopId,jdbcType=VARCHAR}, #{userType,jdbcType=SMALLINT}, 
+      #{email,jdbcType=VARCHAR}, #{mobilePhone,jdbcType=VARCHAR}, #{userStatus,jdbcType=SMALLINT}, 
+      #{dateFrom,jdbcType=VARCHAR}, #{dateTo,jdbcType=VARCHAR}, #{activedate,jdbcType=VARCHAR}, 
+      #{enddate,jdbcType=VARCHAR}, #{creator,jdbcType=BIGINT}, #{timeCreated,jdbcType=VARCHAR}, 
+      #{whoModified,jdbcType=BIGINT}, #{timeModified,jdbcType=VARCHAR}, #{channel,jdbcType=VARCHAR}, 
+      #{source,jdbcType=VARCHAR}, #{userImg,jdbcType=VARCHAR}, #{userExt2,jdbcType=VARCHAR}, 
+      #{userExt3,jdbcType=VARCHAR}, #{userExt4,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.home.cn.model.HomeAuthUser" >
+    insert into home_auth_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        uuid,
+      </if>
+      <if test="loginName != null" >
+        login_name,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="saltDensityValue != null" >
+        salt_density_value,
+      </if>
+      <if test="plotCode != null" >
+        plot_code,
+      </if>
+      <if test="plotName != null" >
+        plot_name,
+      </if>
+      <if test="shopId != null" >
+        shop_id,
+      </if>
+      <if test="userType != null" >
+        user_type,
+      </if>
+      <if test="email != null" >
+        email,
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone,
+      </if>
+      <if test="userStatus != null" >
+        user_status,
+      </if>
+      <if test="dateFrom != null" >
+        date_from,
+      </if>
+      <if test="dateTo != null" >
+        date_to,
+      </if>
+      <if test="activedate != null" >
+        activedate,
+      </if>
+      <if test="enddate != null" >
+        enddate,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="timeCreated != null" >
+        time_created,
+      </if>
+      <if test="whoModified != null" >
+        who_modified,
+      </if>
+      <if test="timeModified != null" >
+        time_modified,
+      </if>
+      <if test="channel != null" >
+        channel,
+      </if>
+      <if test="source != null" >
+        source,
+      </if>
+      <if test="userImg != null" >
+        user_img,
+      </if>
+      <if test="userExt2 != null" >
+        user_ext2,
+      </if>
+      <if test="userExt3 != null" >
+        user_ext3,
+      </if>
+      <if test="userExt4 != null" >
+        user_ext4,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="loginName != null" >
+        #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="saltDensityValue != null" >
+        #{saltDensityValue,jdbcType=VARCHAR},
+      </if>
+      <if test="plotCode != null" >
+        #{plotCode,jdbcType=BIGINT},
+      </if>
+      <if test="plotName != null" >
+        #{plotName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        #{userType,jdbcType=SMALLINT},
+      </if>
+      <if test="email != null" >
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        #{userStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="dateFrom != null" >
+        #{dateFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTo != null" >
+        #{dateTo,jdbcType=VARCHAR},
+      </if>
+      <if test="activedate != null" >
+        #{activedate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="timeCreated != null" >
+        #{timeCreated,jdbcType=VARCHAR},
+      </if>
+      <if test="whoModified != null" >
+        #{whoModified,jdbcType=BIGINT},
+      </if>
+      <if test="timeModified != null" >
+        #{timeModified,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="userImg != null" >
+        #{userImg,jdbcType=VARCHAR},
+      </if>
+      <if test="userExt2 != null" >
+        #{userExt2,jdbcType=VARCHAR},
+      </if>
+      <if test="userExt3 != null" >
+        #{userExt3,jdbcType=VARCHAR},
+      </if>
+      <if test="userExt4 != null" >
+        #{userExt4,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.home.cn.model.HomeAuthUserExample" resultType="java.lang.Integer" >
+    select count(*) from home_auth_user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update home_auth_user
+    <set >
+      <if test="record.uuid != null" >
+        uuid = #{record.uuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.loginName != null" >
+        login_name = #{record.loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null" >
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.saltDensityValue != null" >
+        salt_density_value = #{record.saltDensityValue,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plotCode != null" >
+        plot_code = #{record.plotCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.plotName != null" >
+        plot_name = #{record.plotName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shopId != null" >
+        shop_id = #{record.shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userType != null" >
+        user_type = #{record.userType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.email != null" >
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobilePhone != null" >
+        mobile_phone = #{record.mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userStatus != null" >
+        user_status = #{record.userStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.dateFrom != null" >
+        date_from = #{record.dateFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateTo != null" >
+        date_to = #{record.dateTo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.activedate != null" >
+        activedate = #{record.activedate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enddate != null" >
+        enddate = #{record.enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=BIGINT},
+      </if>
+      <if test="record.timeCreated != null" >
+        time_created = #{record.timeCreated,jdbcType=VARCHAR},
+      </if>
+      <if test="record.whoModified != null" >
+        who_modified = #{record.whoModified,jdbcType=BIGINT},
+      </if>
+      <if test="record.timeModified != null" >
+        time_modified = #{record.timeModified,jdbcType=VARCHAR},
+      </if>
+      <if test="record.channel != null" >
+        channel = #{record.channel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.source != null" >
+        source = #{record.source,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userImg != null" >
+        user_img = #{record.userImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userExt2 != null" >
+        user_ext2 = #{record.userExt2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userExt3 != null" >
+        user_ext3 = #{record.userExt3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userExt4 != null" >
+        user_ext4 = #{record.userExt4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update home_auth_user
+    set uuid = #{record.uuid,jdbcType=BIGINT},
+      login_name = #{record.loginName,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      salt_density_value = #{record.saltDensityValue,jdbcType=VARCHAR},
+      plot_code = #{record.plotCode,jdbcType=BIGINT},
+      plot_name = #{record.plotName,jdbcType=VARCHAR},
+      shop_id = #{record.shopId,jdbcType=VARCHAR},
+      user_type = #{record.userType,jdbcType=SMALLINT},
+      email = #{record.email,jdbcType=VARCHAR},
+      mobile_phone = #{record.mobilePhone,jdbcType=VARCHAR},
+      user_status = #{record.userStatus,jdbcType=SMALLINT},
+      date_from = #{record.dateFrom,jdbcType=VARCHAR},
+      date_to = #{record.dateTo,jdbcType=VARCHAR},
+      activedate = #{record.activedate,jdbcType=VARCHAR},
+      enddate = #{record.enddate,jdbcType=VARCHAR},
+      creator = #{record.creator,jdbcType=BIGINT},
+      time_created = #{record.timeCreated,jdbcType=VARCHAR},
+      who_modified = #{record.whoModified,jdbcType=BIGINT},
+      time_modified = #{record.timeModified,jdbcType=VARCHAR},
+      channel = #{record.channel,jdbcType=VARCHAR},
+      source = #{record.source,jdbcType=VARCHAR},
+      user_img = #{record.userImg,jdbcType=VARCHAR},
+      user_ext2 = #{record.userExt2,jdbcType=VARCHAR},
+      user_ext3 = #{record.userExt3,jdbcType=VARCHAR},
+      user_ext4 = #{record.userExt4,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.home.cn.model.HomeAuthUser" >
+    update home_auth_user
+    <set >
+      <if test="loginName != null" >
+        login_name = #{loginName,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="saltDensityValue != null" >
+        salt_density_value = #{saltDensityValue,jdbcType=VARCHAR},
+      </if>
+      <if test="plotCode != null" >
+        plot_code = #{plotCode,jdbcType=BIGINT},
+      </if>
+      <if test="plotName != null" >
+        plot_name = #{plotName,jdbcType=VARCHAR},
+      </if>
+      <if test="shopId != null" >
+        shop_id = #{shopId,jdbcType=VARCHAR},
+      </if>
+      <if test="userType != null" >
+        user_type = #{userType,jdbcType=SMALLINT},
+      </if>
+      <if test="email != null" >
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="mobilePhone != null" >
+        mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userStatus != null" >
+        user_status = #{userStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="dateFrom != null" >
+        date_from = #{dateFrom,jdbcType=VARCHAR},
+      </if>
+      <if test="dateTo != null" >
+        date_to = #{dateTo,jdbcType=VARCHAR},
+      </if>
+      <if test="activedate != null" >
+        activedate = #{activedate,jdbcType=VARCHAR},
+      </if>
+      <if test="enddate != null" >
+        enddate = #{enddate,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="timeCreated != null" >
+        time_created = #{timeCreated,jdbcType=VARCHAR},
+      </if>
+      <if test="whoModified != null" >
+        who_modified = #{whoModified,jdbcType=BIGINT},
+      </if>
+      <if test="timeModified != null" >
+        time_modified = #{timeModified,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        channel = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="source != null" >
+        source = #{source,jdbcType=VARCHAR},
+      </if>
+      <if test="userImg != null" >
+        user_img = #{userImg,jdbcType=VARCHAR},
+      </if>
+      <if test="userExt2 != null" >
+        user_ext2 = #{userExt2,jdbcType=VARCHAR},
+      </if>
+      <if test="userExt3 != null" >
+        user_ext3 = #{userExt3,jdbcType=VARCHAR},
+      </if>
+      <if test="userExt4 != null" >
+        user_ext4 = #{userExt4,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.home.cn.model.HomeAuthUser" >
+    update home_auth_user
+    set login_name = #{loginName,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      salt_density_value = #{saltDensityValue,jdbcType=VARCHAR},
+      plot_code = #{plotCode,jdbcType=BIGINT},
+      plot_name = #{plotName,jdbcType=VARCHAR},
+      shop_id = #{shopId,jdbcType=VARCHAR},
+      user_type = #{userType,jdbcType=SMALLINT},
+      email = #{email,jdbcType=VARCHAR},
+      mobile_phone = #{mobilePhone,jdbcType=VARCHAR},
+      user_status = #{userStatus,jdbcType=SMALLINT},
+      date_from = #{dateFrom,jdbcType=VARCHAR},
+      date_to = #{dateTo,jdbcType=VARCHAR},
+      activedate = #{activedate,jdbcType=VARCHAR},
+      enddate = #{enddate,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=BIGINT},
+      time_created = #{timeCreated,jdbcType=VARCHAR},
+      who_modified = #{whoModified,jdbcType=BIGINT},
+      time_modified = #{timeModified,jdbcType=VARCHAR},
+      channel = #{channel,jdbcType=VARCHAR},
+      source = #{source,jdbcType=VARCHAR},
+      user_img = #{userImg,jdbcType=VARCHAR},
+      user_ext2 = #{userExt2,jdbcType=VARCHAR},
+      user_ext3 = #{userExt3,jdbcType=VARCHAR},
+      user_ext4 = #{userExt4,jdbcType=VARCHAR}
+    where uuid = #{uuid,jdbcType=BIGINT}
+  </update>
+    <select id="query" resultMap="BaseResultMap" parameterType="com.home.cn.param.HomeAuthUserParam">
+  		select <include refid="Base_Column_List" /> from home_auth_user where 1 = 1 and user_status = 0 
+  	  <if test="uuid != null" >
+        and UUID = #{uuid,jdbcType=BIGINT} 
+      </if>
+      <if test="loginName != null" >
+        and login_name = #{loginName,jdbcType=VARCHAR}
+      </if>
+      <if test="userName != null" >
+        and user_name = #{userName,jdbcType=VARCHAR}
+      </if>
+      <if test="password != null" >
+        and password = #{password,jdbcType=VARCHAR}
+      </if>
+      <if test="plotCode != null" >
+        and plot_code = #{plotCode,jdbcType=BIGINT}
+      </if>
+      <if test="plotName != null" >
+        and plot_name = #{plotName,jdbcType=VARCHAR}
+      </if>
+      <if test="shopId != null" >
+        and shop_id = #{shopId,jdbcType=VARCHAR}
+      </if>
+      <if test="creator != null" >
+        and creator = #{creator,jdbcType=BIGINT}
+      </if>
+      <if test="userType != null" >
+        and user_type = #{userType,jdbcType=SMALLINT}
+      </if>
+      <if test="mobilePhone != null" >
+        and mobile_phone = #{mobilePhone,jdbcType=VARCHAR}
+      </if>
+      <if test="userStatus != null" >
+        and user_status = #{userStatus,jdbcType=SMALLINT}
+      </if>
+  	</select>
+</mapper>

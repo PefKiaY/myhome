@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration >
+  <classPathEntry  location="D:/repository/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar"/>
+  <context id="context1" >
+  	<commentGenerator>
+            <!-- 抑制警告 -->
+            <property name="suppressTypeWarnings" value="true" />
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true" />
+            <!-- 是否生成注释代时间戳 -->
+            <property name="suppressDate" value="true" />
+    </commentGenerator>
+    <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://172.16.102.103:3388/wisdombus_zhcx" userId="root" password="123456" />
+    <javaModelGenerator targetPackage="com.zhcx.itbus.commLine.model" targetProject="wisdombus-line" />
+    <sqlMapGenerator targetPackage="com.zhcx.itbus.commLine.mapper" targetProject="wisdombus-line/src/main/resources" />
+    <javaClientGenerator targetPackage="com.zhcx.itbus.commLine.mapper" targetProject="wisdombus-line" type="XMLMAPPER" />
+    <table schema="general" tableName="Comm_Site" domainObjectName="CommSite" >
+    </table>
+  </context>
+</generatorConfiguration>

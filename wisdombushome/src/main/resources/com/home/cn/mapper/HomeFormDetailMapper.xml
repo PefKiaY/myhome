@@ -1,0 +1,522 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.home.cn.mapper.HomeFormDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.home.cn.model.HomeFormDetail" >
+    <id column="UUID" property="uuid" jdbcType="BIGINT" />
+    <result column="identity_type" property="identityType" jdbcType="SMALLINT" />
+    <result column="plot_code" property="plotCode" jdbcType="BIGINT" />
+    <result column="plot_name" property="plotName" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="goods_up" property="goodsUp" jdbcType="INTEGER" />
+    <result column="goods_middle" property="goodsMiddle" jdbcType="INTEGER" />
+    <result column="goods_last" property="goodsLast" jdbcType="INTEGER" />
+    <result column="form_title" property="formTitle" jdbcType="VARCHAR" />
+    <result column="connector" property="connector" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="corp_id" property="corpId" jdbcType="BIGINT" />
+    <result column="eff_end_time" property="effEndTime" jdbcType="TIMESTAMP" />
+    <result column="eff_start_time" property="effStartTime" jdbcType="TIMESTAMP" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.home.cn.model.HomeFormDetail" extends="BaseResultMap" >
+    <result column="form_remark" property="formRemark" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UUID, identity_type, plot_code, plot_name, addr, goods_up, goods_middle, goods_last, 
+    form_title, connector, phone, corp_id, eff_end_time, eff_start_time, creator, creat_time, 
+    modifier, modify_time
+  </sql>
+  <sql id="Blob_Column_List" >
+    form_remark
+  </sql>
+  <select id="selectByExampleWithBLOBs" resultMap="ResultMapWithBLOBs" parameterType="com.home.cn.model.HomeFormDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from home_form_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.home.cn.model.HomeFormDetailExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from home_form_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from home_form_detail
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from home_form_detail
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.home.cn.model.HomeFormDetailExample" >
+    delete from home_form_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.home.cn.model.HomeFormDetail" >
+    insert into home_form_detail (UUID, identity_type, plot_code, 
+      plot_name, addr, goods_up, 
+      goods_middle, goods_last, form_title, 
+      connector, phone, corp_id, 
+      eff_end_time, eff_start_time, creator, 
+      creat_time, modifier, modify_time, 
+      form_remark)
+    values (#{uuid,jdbcType=BIGINT}, #{identityType,jdbcType=SMALLINT}, #{plotCode,jdbcType=BIGINT}, 
+      #{plotName,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{goodsUp,jdbcType=INTEGER}, 
+      #{goodsMiddle,jdbcType=INTEGER}, #{goodsLast,jdbcType=INTEGER}, #{formTitle,jdbcType=VARCHAR}, 
+      #{connector,jdbcType=VARCHAR}, #{phone,jdbcType=VARCHAR}, #{corpId,jdbcType=BIGINT}, 
+      #{effEndTime,jdbcType=TIMESTAMP}, #{effStartTime,jdbcType=TIMESTAMP}, #{creator,jdbcType=BIGINT}, 
+      #{creatTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}, 
+      #{formRemark,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.home.cn.model.HomeFormDetail" >
+    insert into home_form_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="identityType != null" >
+        identity_type,
+      </if>
+      <if test="plotCode != null" >
+        plot_code,
+      </if>
+      <if test="plotName != null" >
+        plot_name,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="goodsUp != null" >
+        goods_up,
+      </if>
+      <if test="goodsMiddle != null" >
+        goods_middle,
+      </if>
+      <if test="goodsLast != null" >
+        goods_last,
+      </if>
+      <if test="formTitle != null" >
+        form_title,
+      </if>
+      <if test="connector != null" >
+        connector,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="corpId != null" >
+        corp_id,
+      </if>
+      <if test="effEndTime != null" >
+        eff_end_time,
+      </if>
+      <if test="effStartTime != null" >
+        eff_start_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+      <if test="formRemark != null" >
+        form_remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="identityType != null" >
+        #{identityType,jdbcType=SMALLINT},
+      </if>
+      <if test="plotCode != null" >
+        #{plotCode,jdbcType=BIGINT},
+      </if>
+      <if test="plotName != null" >
+        #{plotName,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUp != null" >
+        #{goodsUp,jdbcType=INTEGER},
+      </if>
+      <if test="goodsMiddle != null" >
+        #{goodsMiddle,jdbcType=INTEGER},
+      </if>
+      <if test="goodsLast != null" >
+        #{goodsLast,jdbcType=INTEGER},
+      </if>
+      <if test="formTitle != null" >
+        #{formTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="connector != null" >
+        #{connector,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="corpId != null" >
+        #{corpId,jdbcType=BIGINT},
+      </if>
+      <if test="effEndTime != null" >
+        #{effEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effStartTime != null" >
+        #{effStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="formRemark != null" >
+        #{formRemark,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.home.cn.model.HomeFormDetailExample" resultType="java.lang.Integer" >
+    select count(*) from home_form_detail
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update home_form_detail
+    <set >
+      <if test="record.uuid != null" >
+        UUID = #{record.uuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.identityType != null" >
+        identity_type = #{record.identityType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.plotCode != null" >
+        plot_code = #{record.plotCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.plotName != null" >
+        plot_name = #{record.plotName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addr != null" >
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsUp != null" >
+        goods_up = #{record.goodsUp,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsMiddle != null" >
+        goods_middle = #{record.goodsMiddle,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsLast != null" >
+        goods_last = #{record.goodsLast,jdbcType=INTEGER},
+      </if>
+      <if test="record.formTitle != null" >
+        form_title = #{record.formTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.connector != null" >
+        connector = #{record.connector,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corpId != null" >
+        corp_id = #{record.corpId,jdbcType=BIGINT},
+      </if>
+      <if test="record.effEndTime != null" >
+        eff_end_time = #{record.effEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.effStartTime != null" >
+        eff_start_time = #{record.effStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=BIGINT},
+      </if>
+      <if test="record.creatTime != null" >
+        creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifier != null" >
+        modifier = #{record.modifier,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyTime != null" >
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.formRemark != null" >
+        form_remark = #{record.formRemark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map" >
+    update home_form_detail
+    set UUID = #{record.uuid,jdbcType=BIGINT},
+      identity_type = #{record.identityType,jdbcType=SMALLINT},
+      plot_code = #{record.plotCode,jdbcType=BIGINT},
+      plot_name = #{record.plotName,jdbcType=VARCHAR},
+      addr = #{record.addr,jdbcType=VARCHAR},
+      goods_up = #{record.goodsUp,jdbcType=INTEGER},
+      goods_middle = #{record.goodsMiddle,jdbcType=INTEGER},
+      goods_last = #{record.goodsLast,jdbcType=INTEGER},
+      form_title = #{record.formTitle,jdbcType=VARCHAR},
+      connector = #{record.connector,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      corp_id = #{record.corpId,jdbcType=BIGINT},
+      eff_end_time = #{record.effEndTime,jdbcType=TIMESTAMP},
+      eff_start_time = #{record.effStartTime,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=BIGINT},
+      creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      modifier = #{record.modifier,jdbcType=BIGINT},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      form_remark = #{record.formRemark,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update home_form_detail
+    set UUID = #{record.uuid,jdbcType=BIGINT},
+      identity_type = #{record.identityType,jdbcType=SMALLINT},
+      plot_code = #{record.plotCode,jdbcType=BIGINT},
+      plot_name = #{record.plotName,jdbcType=VARCHAR},
+      addr = #{record.addr,jdbcType=VARCHAR},
+      goods_up = #{record.goodsUp,jdbcType=INTEGER},
+      goods_middle = #{record.goodsMiddle,jdbcType=INTEGER},
+      goods_last = #{record.goodsLast,jdbcType=INTEGER},
+      form_title = #{record.formTitle,jdbcType=VARCHAR},
+      connector = #{record.connector,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      corp_id = #{record.corpId,jdbcType=BIGINT},
+      eff_end_time = #{record.effEndTime,jdbcType=TIMESTAMP},
+      eff_start_time = #{record.effStartTime,jdbcType=TIMESTAMP},
+      creator = #{record.creator,jdbcType=BIGINT},
+      creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      modifier = #{record.modifier,jdbcType=BIGINT},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.home.cn.model.HomeFormDetail" >
+    update home_form_detail
+    <set >
+      <if test="identityType != null" >
+        identity_type = #{identityType,jdbcType=SMALLINT},
+      </if>
+      <if test="plotCode != null" >
+        plot_code = #{plotCode,jdbcType=BIGINT},
+      </if>
+      <if test="plotName != null" >
+        plot_name = #{plotName,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsUp != null" >
+        goods_up = #{goodsUp,jdbcType=INTEGER},
+      </if>
+      <if test="goodsMiddle != null" >
+        goods_middle = #{goodsMiddle,jdbcType=INTEGER},
+      </if>
+      <if test="goodsLast != null" >
+        goods_last = #{goodsLast,jdbcType=INTEGER},
+      </if>
+      <if test="formTitle != null" >
+        form_title = #{formTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="connector != null" >
+        connector = #{connector,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="corpId != null" >
+        corp_id = #{corpId,jdbcType=BIGINT},
+      </if>
+      <if test="effEndTime != null" >
+        eff_end_time = #{effEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effStartTime != null" >
+        eff_start_time = #{effStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="formRemark != null" >
+        form_remark = #{formRemark,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.home.cn.model.HomeFormDetail" >
+    update home_form_detail
+    set identity_type = #{identityType,jdbcType=SMALLINT},
+      plot_code = #{plotCode,jdbcType=BIGINT},
+      plot_name = #{plotName,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      goods_up = #{goodsUp,jdbcType=INTEGER},
+      goods_middle = #{goodsMiddle,jdbcType=INTEGER},
+      goods_last = #{goodsLast,jdbcType=INTEGER},
+      form_title = #{formTitle,jdbcType=VARCHAR},
+      connector = #{connector,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      corp_id = #{corpId,jdbcType=BIGINT},
+      eff_end_time = #{effEndTime,jdbcType=TIMESTAMP},
+      eff_start_time = #{effStartTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=BIGINT},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      form_remark = #{formRemark,jdbcType=LONGVARCHAR}
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.home.cn.model.HomeFormDetail" >
+    update home_form_detail
+    set identity_type = #{identityType,jdbcType=SMALLINT},
+      plot_code = #{plotCode,jdbcType=BIGINT},
+      plot_name = #{plotName,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      goods_up = #{goodsUp,jdbcType=INTEGER},
+      goods_middle = #{goodsMiddle,jdbcType=INTEGER},
+      goods_last = #{goodsLast,jdbcType=INTEGER},
+      form_title = #{formTitle,jdbcType=VARCHAR},
+      connector = #{connector,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      corp_id = #{corpId,jdbcType=BIGINT},
+      eff_end_time = #{effEndTime,jdbcType=TIMESTAMP},
+      eff_start_time = #{effStartTime,jdbcType=TIMESTAMP},
+      creator = #{creator,jdbcType=BIGINT},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <select id="query" resultMap="BaseResultMap" parameterType="com.home.cn.param.HomeFormDetailParam">
+  		select <include refid="Base_Column_List" /> from home_form_detail where 1 = 1 
+  	  <if test="uuid != null" >
+        and UUID = #{uuid,jdbcType=BIGINT} 
+      </if>
+      <if test="identityType != null" >
+        and identity_type = #{identityType,jdbcType=SMALLINT}
+      </if>
+      <if test="plotCode != null" >
+        and plot_code = #{plotCode,jdbcType=BIGINT}
+      </if>
+      <if test="plotName != null" >
+        and plot_name = #{plotName,jdbcType=VARCHAR}
+      </if>
+      <if test="creator != null" >
+        and creator = #{creator,jdbcType=BIGINT}
+      </if>
+      <if test="creatTime != null" >
+        and creat_time = #{creatTime,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+</mapper>

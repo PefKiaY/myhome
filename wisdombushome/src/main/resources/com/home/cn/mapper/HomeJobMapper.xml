@@ -1,0 +1,489 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.home.cn.mapper.HomeJobMapper" >
+  <resultMap id="BaseResultMap" type="com.home.cn.model.HomeJob" >
+    <id column="UUID" property="uuid" jdbcType="BIGINT" />
+    <result column="province" property="province" jdbcType="VARCHAR" />
+    <result column="town" property="town" jdbcType="VARCHAR" />
+    <result column="county" property="county" jdbcType="VARCHAR" />
+    <result column="addr" property="addr" jdbcType="VARCHAR" />
+    <result column="job_key" property="jobKey" jdbcType="VARCHAR" />
+    <result column="job_title" property="jobTitle" jdbcType="VARCHAR" />
+    <result column="salary_unit" property="salaryUnit" jdbcType="VARCHAR" />
+    <result column="salary" property="salary" jdbcType="INTEGER" />
+    <result column="job_remark" property="jobRemark" jdbcType="VARCHAR" />
+    <result column="about_us" property="aboutUs" jdbcType="VARCHAR" />
+    <result column="connector" property="connector" jdbcType="VARCHAR" />
+    <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="eff_end_time" property="effEndTime" jdbcType="TIMESTAMP" />
+    <result column="eff_start_time" property="effStartTime" jdbcType="TIMESTAMP" />
+    <result column="plot_code" property="plotCode" jdbcType="BIGINT" />
+    <result column="plot_name" property="plotName" jdbcType="VARCHAR" />
+    <result column="creator" property="creator" jdbcType="BIGINT" />
+    <result column="creat_time" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="modifier" property="modifier" jdbcType="BIGINT" />
+    <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    UUID, province, town, county, addr, job_key, job_title, salary_unit, salary, job_remark, 
+    about_us, connector, phone, eff_end_time, eff_start_time, plot_code, plot_name, creator, 
+    creat_time, modifier, modify_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.home.cn.model.HomeJobExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from home_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from home_job
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from home_job
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.home.cn.model.HomeJobExample" >
+    delete from home_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.home.cn.model.HomeJob" >
+    insert into home_job (UUID, province, town, 
+      county, addr, job_key, 
+      job_title, salary_unit, salary, 
+      job_remark, about_us, connector, 
+      phone, eff_end_time, eff_start_time, 
+      plot_code, plot_name, creator, 
+      creat_time, modifier, modify_time
+      )
+    values (#{uuid,jdbcType=BIGINT}, #{province,jdbcType=VARCHAR}, #{town,jdbcType=VARCHAR}, 
+      #{county,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{jobKey,jdbcType=VARCHAR}, 
+      #{jobTitle,jdbcType=VARCHAR}, #{salaryUnit,jdbcType=VARCHAR}, #{salary,jdbcType=INTEGER}, 
+      #{jobRemark,jdbcType=VARCHAR}, #{aboutUs,jdbcType=VARCHAR}, #{connector,jdbcType=VARCHAR}, 
+      #{phone,jdbcType=VARCHAR}, #{effEndTime,jdbcType=TIMESTAMP}, #{effStartTime,jdbcType=TIMESTAMP}, 
+      #{plotCode,jdbcType=BIGINT}, #{plotName,jdbcType=VARCHAR}, #{creator,jdbcType=BIGINT}, 
+      #{creatTime,jdbcType=TIMESTAMP}, #{modifier,jdbcType=BIGINT}, #{modifyTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.home.cn.model.HomeJob" >
+    insert into home_job
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        UUID,
+      </if>
+      <if test="province != null" >
+        province,
+      </if>
+      <if test="town != null" >
+        town,
+      </if>
+      <if test="county != null" >
+        county,
+      </if>
+      <if test="addr != null" >
+        addr,
+      </if>
+      <if test="jobKey != null" >
+        job_key,
+      </if>
+      <if test="jobTitle != null" >
+        job_title,
+      </if>
+      <if test="salaryUnit != null" >
+        salary_unit,
+      </if>
+      <if test="salary != null" >
+        salary,
+      </if>
+      <if test="jobRemark != null" >
+        job_remark,
+      </if>
+      <if test="aboutUs != null" >
+        about_us,
+      </if>
+      <if test="connector != null" >
+        connector,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="effEndTime != null" >
+        eff_end_time,
+      </if>
+      <if test="effStartTime != null" >
+        eff_start_time,
+      </if>
+      <if test="plotCode != null" >
+        plot_code,
+      </if>
+      <if test="plotName != null" >
+        plot_name,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="creatTime != null" >
+        creat_time,
+      </if>
+      <if test="modifier != null" >
+        modifier,
+      </if>
+      <if test="modifyTime != null" >
+        modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="uuid != null" >
+        #{uuid,jdbcType=BIGINT},
+      </if>
+      <if test="province != null" >
+        #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="town != null" >
+        #{town,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null" >
+        #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="jobKey != null" >
+        #{jobKey,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryUnit != null" >
+        #{salaryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        #{salary,jdbcType=INTEGER},
+      </if>
+      <if test="jobRemark != null" >
+        #{jobRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="aboutUs != null" >
+        #{aboutUs,jdbcType=VARCHAR},
+      </if>
+      <if test="connector != null" >
+        #{connector,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="effEndTime != null" >
+        #{effEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effStartTime != null" >
+        #{effStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="plotCode != null" >
+        #{plotCode,jdbcType=BIGINT},
+      </if>
+      <if test="plotName != null" >
+        #{plotName,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        #{modifier,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.home.cn.model.HomeJobExample" resultType="java.lang.Integer" >
+    select count(*) from home_job
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update home_job
+    <set >
+      <if test="record.uuid != null" >
+        UUID = #{record.uuid,jdbcType=BIGINT},
+      </if>
+      <if test="record.province != null" >
+        province = #{record.province,jdbcType=VARCHAR},
+      </if>
+      <if test="record.town != null" >
+        town = #{record.town,jdbcType=VARCHAR},
+      </if>
+      <if test="record.county != null" >
+        county = #{record.county,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addr != null" >
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobKey != null" >
+        job_key = #{record.jobKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.jobTitle != null" >
+        job_title = #{record.jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salaryUnit != null" >
+        salary_unit = #{record.salaryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.salary != null" >
+        salary = #{record.salary,jdbcType=INTEGER},
+      </if>
+      <if test="record.jobRemark != null" >
+        job_remark = #{record.jobRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aboutUs != null" >
+        about_us = #{record.aboutUs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.connector != null" >
+        connector = #{record.connector,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phone != null" >
+        phone = #{record.phone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effEndTime != null" >
+        eff_end_time = #{record.effEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.effStartTime != null" >
+        eff_start_time = #{record.effStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.plotCode != null" >
+        plot_code = #{record.plotCode,jdbcType=BIGINT},
+      </if>
+      <if test="record.plotName != null" >
+        plot_name = #{record.plotName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=BIGINT},
+      </if>
+      <if test="record.creatTime != null" >
+        creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifier != null" >
+        modifier = #{record.modifier,jdbcType=BIGINT},
+      </if>
+      <if test="record.modifyTime != null" >
+        modify_time = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update home_job
+    set UUID = #{record.uuid,jdbcType=BIGINT},
+      province = #{record.province,jdbcType=VARCHAR},
+      town = #{record.town,jdbcType=VARCHAR},
+      county = #{record.county,jdbcType=VARCHAR},
+      addr = #{record.addr,jdbcType=VARCHAR},
+      job_key = #{record.jobKey,jdbcType=VARCHAR},
+      job_title = #{record.jobTitle,jdbcType=VARCHAR},
+      salary_unit = #{record.salaryUnit,jdbcType=VARCHAR},
+      salary = #{record.salary,jdbcType=INTEGER},
+      job_remark = #{record.jobRemark,jdbcType=VARCHAR},
+      about_us = #{record.aboutUs,jdbcType=VARCHAR},
+      connector = #{record.connector,jdbcType=VARCHAR},
+      phone = #{record.phone,jdbcType=VARCHAR},
+      eff_end_time = #{record.effEndTime,jdbcType=TIMESTAMP},
+      eff_start_time = #{record.effStartTime,jdbcType=TIMESTAMP},
+      plot_code = #{record.plotCode,jdbcType=BIGINT},
+      plot_name = #{record.plotName,jdbcType=VARCHAR},
+      creator = #{record.creator,jdbcType=BIGINT},
+      creat_time = #{record.creatTime,jdbcType=TIMESTAMP},
+      modifier = #{record.modifier,jdbcType=BIGINT},
+      modify_time = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.home.cn.model.HomeJob" >
+    update home_job
+    <set >
+      <if test="province != null" >
+        province = #{province,jdbcType=VARCHAR},
+      </if>
+      <if test="town != null" >
+        town = #{town,jdbcType=VARCHAR},
+      </if>
+      <if test="county != null" >
+        county = #{county,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null" >
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="jobKey != null" >
+        job_key = #{jobKey,jdbcType=VARCHAR},
+      </if>
+      <if test="jobTitle != null" >
+        job_title = #{jobTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="salaryUnit != null" >
+        salary_unit = #{salaryUnit,jdbcType=VARCHAR},
+      </if>
+      <if test="salary != null" >
+        salary = #{salary,jdbcType=INTEGER},
+      </if>
+      <if test="jobRemark != null" >
+        job_remark = #{jobRemark,jdbcType=VARCHAR},
+      </if>
+      <if test="aboutUs != null" >
+        about_us = #{aboutUs,jdbcType=VARCHAR},
+      </if>
+      <if test="connector != null" >
+        connector = #{connector,jdbcType=VARCHAR},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone,jdbcType=VARCHAR},
+      </if>
+      <if test="effEndTime != null" >
+        eff_end_time = #{effEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="effStartTime != null" >
+        eff_start_time = #{effStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="plotCode != null" >
+        plot_code = #{plotCode,jdbcType=BIGINT},
+      </if>
+      <if test="plotName != null" >
+        plot_name = #{plotName,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=BIGINT},
+      </if>
+      <if test="creatTime != null" >
+        creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifier != null" >
+        modifier = #{modifier,jdbcType=BIGINT},
+      </if>
+      <if test="modifyTime != null" >
+        modify_time = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.home.cn.model.HomeJob" >
+    update home_job
+    set province = #{province,jdbcType=VARCHAR},
+      town = #{town,jdbcType=VARCHAR},
+      county = #{county,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      job_key = #{jobKey,jdbcType=VARCHAR},
+      job_title = #{jobTitle,jdbcType=VARCHAR},
+      salary_unit = #{salaryUnit,jdbcType=VARCHAR},
+      salary = #{salary,jdbcType=INTEGER},
+      job_remark = #{jobRemark,jdbcType=VARCHAR},
+      about_us = #{aboutUs,jdbcType=VARCHAR},
+      connector = #{connector,jdbcType=VARCHAR},
+      phone = #{phone,jdbcType=VARCHAR},
+      eff_end_time = #{effEndTime,jdbcType=TIMESTAMP},
+      eff_start_time = #{effStartTime,jdbcType=TIMESTAMP},
+      plot_code = #{plotCode,jdbcType=BIGINT},
+      plot_name = #{plotName,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=BIGINT},
+      creat_time = #{creatTime,jdbcType=TIMESTAMP},
+      modifier = #{modifier,jdbcType=BIGINT},
+      modify_time = #{modifyTime,jdbcType=TIMESTAMP}
+    where UUID = #{uuid,jdbcType=BIGINT}
+  </update>
+    <select id="query" resultMap="BaseResultMap" parameterType="com.home.cn.param.HomeJobParam">
+  		select <include refid="Base_Column_List" /> from home_job where 1 = 1 
+  	  <if test="uuid != null" >
+        and UUID = #{uuid,jdbcType=BIGINT} 
+      </if>
+  	  <if test="jobKey != null" >
+        and job_key = #{jobKey,jdbcType=VARCHAR}
+      </if>
+      <if test="jobTitle != null" >
+        and job_title = #{jobTitle,jdbcType=VARCHAR}
+      </if>
+      <if test="plotCode != null" >
+        and plot_code = #{plotCode,jdbcType=BIGINT}
+      </if>
+      <if test="plotName != null" >
+        and plot_name = #{plotName,jdbcType=VARCHAR}
+      </if>
+      <if test="creator != null" >
+        and creator = #{creator,jdbcType=BIGINT}
+      </if>
+      <if test="creatTime != null" >
+        and creat_time = #{creatTime,jdbcType=TIMESTAMP}
+      </if>
+  </select>
+</mapper>
