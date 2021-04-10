@@ -25,7 +25,7 @@ import com.zhcx.platform.pagination.PageBean;
 
 @RestController
 @RequestMapping("/homehousingrent")
-@Api(tags = { "homehousingrent" }, value ="fangchan信息")
+@Api(tags = { "homehousingrent" }, value ="房子信息")
 public class HomeHousingRentController extends BaseController{
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());

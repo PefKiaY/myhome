@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableTransactionManagement  
 public class DruidDataSourceConfig {
 	
+	@SuppressWarnings("unused")
 	private RelaxedPropertyResolver propertyResolver;  
 	  
     public void setEnvironment(Environment env) {  

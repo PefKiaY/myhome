@@ -22,7 +22,7 @@ import com.zhcx.itbus.common.controller.BaseController;
 
 @RestController
 @RequestMapping("/homeprovince")
-@Api(tags = { "homeprovince" }, value ="homeprovince")
+@Api(tags = { "homeprovince" }, value ="省份管理")
 public class HomeDictionaryProvinceCityController extends BaseController{
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());

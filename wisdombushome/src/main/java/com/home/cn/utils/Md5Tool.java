@@ -11,6 +11,7 @@ import sun.misc.BASE64Encoder;
  * @date：2014-4-17 下午1:45:25 
  * @version
  */
+@SuppressWarnings("restriction")
 public class Md5Tool {
 	
 	/**
@@ -21,7 +22,6 @@ public class Md5Tool {
 	 * @return String
 	 * @throws
 	 */
-	@SuppressWarnings("restriction")
 	public static String getMd5(String password){
 		String str = "";
 		if(password !=null && !password.equals("")){

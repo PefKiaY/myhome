@@ -22,7 +22,7 @@ import com.zhcx.itbus.common.controller.BaseController;
 
 @RestController
 @RequestMapping("/homehousingatta")
-@Api(tags = { "homehousingatta" }, value ="atta信息")
+@Api(tags = { "homehousingatta" }, value ="附件信息")
 public class HomeHousingAttaController extends BaseController{
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
