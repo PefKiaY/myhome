@@ -44,7 +44,7 @@ public class HomePlotController extends BaseController{
 				param.setPlotCode(Long.parseLong(plotCode));
 			}
 			if(plotName != null && !"".equals(plotName)){
-				param.setPlotName(plotName);
+				param.setPlotName("%"+plotName+"%");
 			}
 			if(uuid != null && !"".equals(uuid)){
 				param.setUuid(Long.parseLong(uuid));

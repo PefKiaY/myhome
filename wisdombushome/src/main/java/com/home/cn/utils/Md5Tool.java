@@ -1,4 +1,4 @@
-package com.zhcx.itbus.utils;
+package com.home.cn.utils;
 
 import java.security.MessageDigest;
 
@@ -21,11 +21,13 @@ public class Md5Tool {
 	 * @return String
 	 * @throws
 	 */
+	@SuppressWarnings("restriction")
 	public static String getMd5(String password){
 		String str = "";
 		if(password !=null && !password.equals("")){
 			try {
 				MessageDigest md = MessageDigest.getInstance("MD5");
+				
 				BASE64Encoder base = new BASE64Encoder();
 				//加密后的字符串
 				str = base.encode(md.digest(password.getBytes("utf-8")));
@@ -51,13 +53,6 @@ public class Md5Tool {
 			flag = true;
 		}
 		return flag;
-	}
-	
-	public static void main(String[] args) {
-		System.out.println(Md5Tool.getMd5("admin"));
-		System.out.println(Md5Tool.getMd5("ISMvKXpXpadDiUoOSoAfww=="));
-		
-		System.out.println(Md5Tool.matchingPass("admin", "ISMvKXpXpadDiUoOSoAfww=="));
 	}
 
 }

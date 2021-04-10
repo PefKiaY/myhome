@@ -330,7 +330,7 @@
         and plot_code = #{plotCode,jdbcType=BIGINT}
       </if>
       <if test="plotName != null" >
-        and plot_name = #{plotName,jdbcType=VARCHAR}
+      	and plot_name LIKE #{plotName,jdbcType=VARCHAR}
       </if>
       <if test="province != null" >
         and province = #{province,jdbcType=VARCHAR}

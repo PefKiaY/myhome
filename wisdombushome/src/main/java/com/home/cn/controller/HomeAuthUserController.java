@@ -17,9 +17,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.home.cn.param.HomeAuthUserParam;
 import com.home.cn.resp.HomeAuthUserResp;
 import com.home.cn.service.HomeAuthUserService;
+import com.home.cn.utils.BeanUtils;
+import com.home.cn.utils.Md5Tool;
+import com.home.cn.utils.MobUtils;
 import com.zhcx.itbus.common.ReturnObject;
 import com.zhcx.itbus.common.controller.BaseController;
-import com.zhcx.itbus.utils.Md5Tool;
 
 @RestController
 @RequestMapping("/homeuser")
@@ -32,7 +34,7 @@ public class HomeAuthUserController extends BaseController{
 	private HomeAuthUserService service;
 	
 	@RequestMapping(value = "/{uuid,plotCode,plotName,loginName}", method = RequestMethod.GET)
-	@ApiOperation(httpMethod = "GET",value = "获取信息")
+	@ApiOperation(httpMethod = "GET",value = "查询用户信息")
 	public List<HomeAuthUserResp> query(
 			@RequestParam(value = "uuid", required = false)  String uuid , 
 			@RequestParam(value = "plotCode", required = false) String plotCode,
@@ -55,6 +57,13 @@ public class HomeAuthUserController extends BaseController{
 				param.setUuid(Long.parseLong(uuid));
 			}
 			respList = service.query(param);
+			
+			if(null != respList) {
+				for (HomeAuthUserResp resp: respList) {
+					resp.setPassword(null);
+				}
+			}
+			
 		} catch (NumberFormatException e) {
 			// TODO Auto-generated catch block
 			logger.error("查询失败"+e.getMessage());
@@ -62,42 +71,172 @@ public class HomeAuthUserController extends BaseController{
 		return respList;
 	}
 	@RequestMapping(value = "/{loginName, password}", method = RequestMethod.GET)
-	@ApiOperation(httpMethod = "GET",value = "获取信息")
-	public HomeAuthUserResp login(
+	@ApiOperation(httpMethod = "GET",value = "登陆信息")
+	public ReturnObject<HomeAuthUserResp> login(
 			@RequestParam(value = "loginName", required = true)  String loginName , 
 			@RequestParam(value = "password", required = true) String password
 			){
+		
+		HomeAuthUserResp user = null;
 		List<HomeAuthUserResp> respList = null;
+		ReturnObject<HomeAuthUserResp> ro = new ReturnObject<>();
 		try {
 			HomeAuthUserParam param = new HomeAuthUserParam();
-			if(password != null && !"".equals(password)){
-				param.setPassword(password);
-			}
 			if(loginName != null && !"".equals(loginName)){
 				param.setLoginName(loginName);
 			}
 			
 			respList = service.query(param);
+					
+			if(null == respList || respList.size()==0) {
+				ro.setStatusCode("1");
+				ro.setResult("false");
+				ro.setResultDesc("用户名或密码错误");
+			} else {
+				user = respList.get(0);
+				if(Md5Tool.matchingPass(password, user.getPassword())){
+					ro.setStatusCode("0");
+					ro.setResult("true");
+					ro.setResultDesc("登陆成功");
+					ro.setData(user);
+				} else {
+					ro.setStatusCode("1");
+					ro.setResult("false");
+					ro.setResultDesc("用户名或密码错误");
+					return ro;
+				}
+			}
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
 			logger.error("查询失败"+e.getMessage());
+			ro.setStatusCode("1");
+			ro.setResult("false");
+			ro.setResultDesc("用户名或密码错误");
 		}
-		HomeAuthUserResp user = null;
-		if(respList != null && respList.size() > 0){
-			user = respList.get(0);
-		}
-		return user;
+		
+		return ro;
 	}
+	
+	@RequestMapping(value = "/{loginName, password,newPassword,mobCode}", method = RequestMethod.POST)
+	@ApiOperation(httpMethod = "POST", value = "修改密码")
+	public ReturnObject<HomeAuthUserResp> insert(
+			@RequestParam(value = "loginName", required = true)  String loginName,
+			@RequestParam(value = "password", required = true) String password,
+			@RequestParam(value = "newPassword", required = true) String newPassword,
+			@RequestParam(value = "mobCode", required = true) String mobCode
+			){
+		ReturnObject<HomeAuthUserResp> ro = new ReturnObject<>();
+		try {
+			HomeAuthUserParam param = new HomeAuthUserParam();
+			boolean result = true;
+			String resultMes = null;
+			if(newPassword == null && "".equals(newPassword)){
+				result = false;
+				resultMes = "新密码不能为空";
+			}
+			if(password == null && "".equals(password)){
+				result = false;
+				resultMes = "旧密码不能为空";
+			}
+			if(loginName != null && !"".equals(loginName)){
+				param.setLoginName(loginName);
+			} else {
+				result = false;
+				resultMes = "用户名不能为空";
+			}
+			if(mobCode == null && "".equals(mobCode)){
+				result = false;
+				resultMes = "验证码不能为空";
+			}
+			if (result) {
+				String resultCode = MobUtils.requestData(loginName, mobCode);
+				if(resultCode.indexOf("200") == -1) {
+					result = false;
+					resultMes = "验证码错误";
+				}				
+			} 
+			if (result) {
+				
+				List<HomeAuthUserResp> respList = service.query(param);				
+				if(null == respList || respList.size()==0) {
+					ro.setStatusCode("1");
+					ro.setResult("false");
+					ro.setResultDesc("用户名或密码错误");
+					return ro;
+				} else {
+					HomeAuthUserResp resp = respList.get(0);
+					
+					if(Md5Tool.matchingPass(password, resp.getPassword())){
+						resp.setPassword(Md5Tool.getMd5(newPassword));
+						HomeAuthUserParam userParam = BeanUtils.copyProperties(HomeAuthUserParam.class, resp);
+						resp = service.updae(userParam);
+						ro.setStatusCode("0");
+						ro.setResult("true");
+						ro.setResultDesc("修改密码成功");
+					} else {
+						ro.setStatusCode("1");
+						ro.setResult("false");
+						ro.setResultDesc("用户名或密码错误");
+						return ro;
+					}
+				}
+			} else {
+				ro.setStatusCode("1");
+				ro.setResult("false");
+				ro.setResultDesc(resultMes);
+				return ro;
+			}
+
+		} catch (Exception e) {
+			logger.error("添加失败"+e.getMessage());
+		}
+		return ro;
+	}
+	
 	@RequestMapping(value = "/{HomeAuthUserParam}", method = RequestMethod.POST)
 	@ApiOperation(httpMethod = "POST", value = "新增信息")
 	public ReturnObject<HomeAuthUserResp> insert(@RequestBody HomeAuthUserParam param){
 		ReturnObject<HomeAuthUserResp> ro = new ReturnObject<>();
 		try {
+			HomeAuthUserParam homeParam = new HomeAuthUserParam();
+			homeParam.setLoginName(param.getLoginName());
+			List<HomeAuthUserResp> respList = service.query(homeParam);
+			
+			if(null != respList) {
+				ro.setStatusCode("1");
+				ro.setResult("false");
+				ro.setResultDesc("手机号码重复");
+				return ro;
+			}
+			String mobCode = param.getMobCode();
+			String loginName = param.getLoginName();
+			
+			if(loginName == null && "".equals(loginName)){
+				ro.setStatusCode("1");
+				ro.setResult("false");
+				ro.setResultDesc("登陆名称不能为空");
+				return ro;
+			}
+			
+			if(mobCode == null && "".equals(mobCode)){
+				ro.setStatusCode("1");
+				ro.setResult("false");
+				ro.setResultDesc("验证码不能为空");
+				return ro;
+			}
+			
+			String resultCode = MobUtils.requestData(loginName, mobCode);
+			if(resultCode.indexOf("200") == -1) {
+				ro.setStatusCode("1");
+				ro.setResult("false");
+				ro.setResultDesc("验证码错误");
+				return ro;
+			} 
+			
 			param.setPassword(Md5Tool.getMd5(param.getPassword()));
 			int rows= service.insert(param);
 			if(rows > 0 ){
 				ro.setResultDesc("增加成功");
-			}else{
+			} else {
 				ro.setStatusCode("1");
 				ro.setResult("false");
 				ro.setResultDesc("增加失败");
@@ -105,6 +244,9 @@ public class HomeAuthUserController extends BaseController{
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			logger.error("添加失败"+e.getMessage());
+			ro.setStatusCode("1");
+			ro.setResult("false");
+			ro.setResultDesc("增加失败");
 		}
 		return ro;
 	}

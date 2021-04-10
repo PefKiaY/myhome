@@ -15,8 +15,18 @@ public class HomeAuthUserParam implements Serializable {
     private String password;
     
     private String newPassword;
+    
+    private String mobCode;
 
-    public String getNewPassword() {
+    public String getMobCode() {
+		return mobCode;
+	}
+
+	public void setMobCode(String mobCode) {
+		this.mobCode = mobCode;
+	}
+
+	public String getNewPassword() {
 		return newPassword;
 	}
 
