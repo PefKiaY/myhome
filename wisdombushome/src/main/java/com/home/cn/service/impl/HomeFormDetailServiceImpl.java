@@ -1,16 +1,18 @@
 package com.home.cn.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.home.cn.utils.BeanUtils;
 import com.home.cn.mapper.HomeFormDetailMapper;
 import com.home.cn.model.HomeFormDetail;
 import com.home.cn.param.HomeFormDetailParam;
 import com.home.cn.resp.HomeFormDetailResp;
 import com.home.cn.service.HomeFormDetailService;
+import com.home.cn.utils.BeanUtils;
 
 @Service
 public class HomeFormDetailServiceImpl implements HomeFormDetailService{
@@ -24,6 +26,22 @@ public class HomeFormDetailServiceImpl implements HomeFormDetailService{
 		List<HomeFormDetail> list = mapper.query(param);
 		List<HomeFormDetailResp> respList = BeanUtils.copyPropertiesByClass(HomeFormDetailResp.class, list);
 		return respList;
+	}
+	
+	@Override
+	public List<HomeFormDetailResp> query(HomeFormDetailParam param, int skipResults, int maxResults) {
+		
+		RowBounds rowBounds = maxResults > 0 ? new RowBounds(skipResults, maxResults) : new RowBounds();
+		List<HomeFormDetailResp> list = new ArrayList<>();
+		list = BeanUtils.copyPropertiesByClass(HomeFormDetailResp.class, mapper.query(param, rowBounds));
+				
+		return list;
+	}
+
+	@Override
+	public int count(HomeFormDetailParam param) {
+		
+		return mapper.count(param);
 	}
 
 	@Override

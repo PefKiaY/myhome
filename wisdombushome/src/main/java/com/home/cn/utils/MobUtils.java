@@ -21,47 +21,36 @@ public class MobUtils {
 	
 	public static String requestData(String phone, String code) {
 		
+		String appkey = "1e1a873c55519";
 		String address = "https://webapi.sms.mob.com/sms/verify";
-		String params = "appkey=1e1a873c55519&phone="+ phone +"&zone=86&&code=" + code;
+		String params = "appkey="+appkey+"&phone="+ phone +"&zone=86&&code=" + code;
 
 		HttpURLConnection conn = null;
 		try {
-			// Create a trust manager that does not validate certificate chains
 			TrustManager[] trustAllCerts = new TrustManager[] { new X509TrustManager() {
 				public X509Certificate[] getAcceptedIssuers() {
 					return null;
 				}
-
 				public void checkClientTrusted(X509Certificate[] certs, String authType) {
 				}
-
 				public void checkServerTrusted(X509Certificate[] certs, String authType) {
 				}
 			} };
-
-			// Install the all-trusting trust manager
 			SSLContext sc = SSLContext.getInstance("TLS");
 			sc.init(null, trustAllCerts, new SecureRandom());
-
-			// ip host verify
 			HostnameVerifier hv = new HostnameVerifier() {
 				public boolean verify(String urlHostName, SSLSession session) {
 					return urlHostName.equals(session.getPeerHost());
 				}
 			};
-
-			// set ip host verify
 			HttpsURLConnection.setDefaultHostnameVerifier(hv);
-
 			HttpsURLConnection
 					.setDefaultSSLSocketFactory(sc.getSocketFactory());
-
 			URL url = new URL(address);
 			conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("POST");// POST
 			conn.setConnectTimeout(3000);
 			conn.setReadTimeout(3000);
-			// set params ;post params
 			if (params != null) {
 				conn.setDoOutput(true);
 				DataOutputStream out = new DataOutputStream( conn.getOutputStream());
@@ -70,9 +59,7 @@ public class MobUtils {
 				out.close();
 			}
 			conn.connect();
-			// get result
 			if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
-				
 				InputStream input = conn.getInputStream();
 				BufferedReader in = new BufferedReader( new InputStreamReader( input));
 				String line = null;
@@ -80,9 +67,7 @@ public class MobUtils {
 				while ((line = in.readLine()) != null) {
 					sb.append(line);
 				}
-				
-				return sb.toString();
-				
+				return sb.toString();				
 			} else {
 				System.out.println(conn.getResponseCode() + " " + conn.getResponseMessage());
 			}

@@ -7,11 +7,15 @@ import com.home.cn.resp.HomeShopResp;
 
 public interface HomeShopService {
 	
-	 List<HomeShopResp>query(HomeShopParam param);
+	 List<HomeShopResp> query(HomeShopParam param);
 
 	 int insert(HomeShopParam param);
 	 
 	 HomeShopResp updae(HomeShopParam param);
 	 
 	 int delete(HomeShopParam param);
+	 
+	 List<HomeShopResp> query(HomeShopParam param, int skipResults, int maxResults);
+	 
+	 int count(HomeShopParam param);
 }

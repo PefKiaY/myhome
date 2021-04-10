@@ -3,6 +3,7 @@ package com.home.cn.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 import com.home.cn.model.HomeFormDetail;
 import com.home.cn.model.HomeFormDetailExample;
@@ -37,5 +38,9 @@ public interface HomeFormDetailMapper {
 
     int updateByPrimaryKey(HomeFormDetail record);
     
+    List<HomeFormDetail> query(HomeFormDetailParam param, RowBounds rowBounds);
+    
     List<HomeFormDetail> query(HomeFormDetailParam param);
+    
+    int count(HomeFormDetailParam param);
 }

@@ -15,4 +15,8 @@ public interface HomeFormDetailService {
 	 
 	 int delete(HomeFormDetailParam param);
 	 
+	 List<HomeFormDetailResp> query(HomeFormDetailParam param, int skipResults, int maxResults);
+	 
+	 int count(HomeFormDetailParam param);
+	 
 }

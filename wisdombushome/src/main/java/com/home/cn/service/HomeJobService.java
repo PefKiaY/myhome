@@ -15,4 +15,7 @@ public interface HomeJobService {
 	 
 	 int delete(HomeJobParam param);
 	 
+	 List<HomeJobResp> query(HomeJobParam param, int skipResults, int maxResults);
+	 
+	 int count(HomeJobParam param);
 }

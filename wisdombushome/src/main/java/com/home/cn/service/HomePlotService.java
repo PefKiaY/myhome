@@ -14,4 +14,8 @@ public interface HomePlotService {
 	 HomePlotResp updae(HomePlotParam param);
 	 
 	 int delete(HomePlotParam param);
+	 
+	List<HomePlotResp> query(HomePlotParam param, int skipResults, int maxResults);
+	
+	int count(HomePlotParam param);
 }

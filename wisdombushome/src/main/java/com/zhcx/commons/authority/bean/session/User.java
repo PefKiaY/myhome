@@ -2,7 +2,6 @@ package com.zhcx.commons.authority.bean.session;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author Administrator

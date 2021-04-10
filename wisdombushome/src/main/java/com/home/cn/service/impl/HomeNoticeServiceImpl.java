@@ -1,16 +1,18 @@
 package com.home.cn.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.home.cn.utils.BeanUtils;
 import com.home.cn.mapper.HomeNoticeMapper;
 import com.home.cn.model.HomeNotice;
 import com.home.cn.param.HomeNoticeParam;
 import com.home.cn.resp.HomeNoticeResp;
 import com.home.cn.service.HomeNoticeService;
+import com.home.cn.utils.BeanUtils;
 
 @Service
 public class HomeNoticeServiceImpl implements HomeNoticeService{
@@ -24,6 +26,22 @@ public class HomeNoticeServiceImpl implements HomeNoticeService{
 		List<HomeNotice> list = mapper.query(param);
 		List<HomeNoticeResp> respList = BeanUtils.copyPropertiesByClass(HomeNoticeResp.class, list);
 		return respList;
+	}
+	
+	@Override
+	public List<HomeNoticeResp> query(HomeNoticeParam param, int skipResults, int maxResults) {
+		
+		RowBounds rowBounds = maxResults > 0 ? new RowBounds(skipResults, maxResults) : new RowBounds();
+		List<HomeNoticeResp> list = new ArrayList<>();
+		list = BeanUtils.copyPropertiesByClass(HomeNoticeResp.class, mapper.query(param, rowBounds));
+				
+		return list;
+	}
+
+	@Override
+	public int count(HomeNoticeParam param) {
+		
+		return mapper.count(param);
 	}
 
 	@Override

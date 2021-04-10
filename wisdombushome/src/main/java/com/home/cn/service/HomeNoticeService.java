@@ -7,11 +7,15 @@ import com.home.cn.resp.HomeNoticeResp;
 
 public interface HomeNoticeService {
 	
-	 List<HomeNoticeResp>query(HomeNoticeParam param);
+	 List<HomeNoticeResp> query(HomeNoticeParam param);
 
 	 int insert(HomeNoticeParam param);
 	 
 	 HomeNoticeResp updae(HomeNoticeParam param);
 	 
 	 int delete(HomeNoticeParam param);
+	 
+	 List<HomeNoticeResp> query(HomeNoticeParam param, int skipResults, int maxResults);
+	 
+	 int count(HomeNoticeParam param);
 }

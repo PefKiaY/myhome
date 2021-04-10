@@ -3,6 +3,7 @@ package com.home.cn.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 import com.home.cn.model.HomeHousingRent;
 import com.home.cn.model.HomeHousingRentExample;
@@ -37,5 +38,9 @@ public interface HomeHousingRentMapper {
 
     int updateByPrimaryKey(HomeHousingRent record);
     
+    List<HomeHousingRent> query(HomeHousingRentParam param, RowBounds rowBounds);
+    
     List<HomeHousingRent> query(HomeHousingRentParam param);
+    
+    int count(HomeHousingRentParam param);
 }

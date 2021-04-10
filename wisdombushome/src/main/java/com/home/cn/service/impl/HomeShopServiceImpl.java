@@ -1,7 +1,9 @@
 package com.home.cn.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +26,22 @@ public class HomeShopServiceImpl implements HomeShopService{
 		List<HomeShop> list = mapper.query(param);
 		List<HomeShopResp> respList = BeanUtils.copyPropertiesByClass(HomeShopResp.class, list);
 		return respList;
+	}
+	
+	@Override
+	public List<HomeShopResp> query(HomeShopParam param, int skipResults, int maxResults) {
+		
+		RowBounds rowBounds = maxResults > 0 ? new RowBounds(skipResults, maxResults) : new RowBounds();
+		List<HomeShopResp> list = new ArrayList<>();
+		list = BeanUtils.copyPropertiesByClass(HomeShopResp.class, mapper.query(param, rowBounds));
+				
+		return list;
+	}
+
+	@Override
+	public int count(HomeShopParam param) {
+		
+		return mapper.count(param);
 	}
 
 	@Override

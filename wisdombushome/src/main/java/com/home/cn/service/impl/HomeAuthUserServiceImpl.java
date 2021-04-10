@@ -1,7 +1,9 @@
 package com.home.cn.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,7 +27,16 @@ public class HomeAuthUserServiceImpl implements HomeAuthUserService{
 		List<HomeAuthUserResp> respList = BeanUtils.copyPropertiesByClass(HomeAuthUserResp.class, list);
 		return respList;
 	}
-
+	
+	@Override
+	public List<HomeAuthUserResp> query(HomeAuthUserParam param, int skipResults, int maxResults) {
+		// TODO Auto-generated method stub
+		RowBounds rowBounds = maxResults > 0 ? new RowBounds(skipResults, maxResults) : new RowBounds();
+		List<HomeAuthUserResp> list = new ArrayList<>();
+		list = BeanUtils.copyPropertiesByClass(HomeAuthUserResp.class, mapper.query(param, rowBounds));
+				
+		return list;
+	}
 	@Override
 	public int insert(HomeAuthUserParam param) {
 		// TODO Auto-generated method stub
@@ -71,6 +82,12 @@ public class HomeAuthUserServiceImpl implements HomeAuthUserService{
 			rows += 1;
 		}
 		return rows;
+	}
+
+	@Override
+	public int count(HomeAuthUserParam param) {
+		
+		return mapper.count(param);
 	}
 
 	

@@ -15,4 +15,8 @@ public interface HomeHousingRentService {
 	 
 	 int delete(HomeHousingRentParam param);
 	 
+	 List<HomeHousingRentResp> query(HomeHousingRentParam param, int skipResults, int maxResults);
+	 
+	 int count(HomeHousingRentParam param);
+	 
 }

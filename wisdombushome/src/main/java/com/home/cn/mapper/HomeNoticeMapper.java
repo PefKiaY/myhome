@@ -3,6 +3,7 @@ package com.home.cn.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 import com.home.cn.model.HomeNotice;
 import com.home.cn.model.HomeNoticeExample;
@@ -31,5 +32,9 @@ public interface HomeNoticeMapper {
 
     int updateByPrimaryKey(HomeNotice record);
     
+    List<HomeNotice> query(HomeNoticeParam param, RowBounds rowBounds);
+    
     List<HomeNotice> query(HomeNoticeParam param);
+    
+    int count(HomeNoticeParam param);
 }

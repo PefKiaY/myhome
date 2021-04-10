@@ -3,6 +3,7 @@ package com.home.cn.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 import com.home.cn.model.HomeJob;
 import com.home.cn.model.HomeJobExample;
@@ -31,5 +32,9 @@ public interface HomeJobMapper {
 
     int updateByPrimaryKey(HomeJob record);
     
+    List<HomeJob> query(HomeJobParam param, RowBounds rowBounds);
+    
     List<HomeJob> query(HomeJobParam param);
+    
+    int count(HomeJobParam param);
 }

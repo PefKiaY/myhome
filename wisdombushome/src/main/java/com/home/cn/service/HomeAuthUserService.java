@@ -14,4 +14,8 @@ public interface HomeAuthUserService {
 	 HomeAuthUserResp updae(HomeAuthUserParam param);
 	 
 	 int delete(HomeAuthUserParam param);
+
+	List<HomeAuthUserResp> query(HomeAuthUserParam param, int skipResults, int maxResults);
+	
+	int count(HomeAuthUserParam param);
 }

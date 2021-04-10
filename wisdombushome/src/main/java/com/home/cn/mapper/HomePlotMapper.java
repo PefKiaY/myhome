@@ -3,12 +3,14 @@ package com.home.cn.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 import com.home.cn.model.HomePlot;
 import com.home.cn.model.HomePlotExample;
 import com.home.cn.param.HomePlotParam;
 
 public interface HomePlotMapper {
+	
     int countByExample(HomePlotExample example);
 
     int deleteByExample(HomePlotExample example);
@@ -32,4 +34,8 @@ public interface HomePlotMapper {
     int updateByPrimaryKey(HomePlot record);
     
     List<HomePlot> query(HomePlotParam param);
+    
+    List<HomePlot> query(HomePlotParam param, RowBounds rowBounds);
+    
+    int count(HomePlotParam param);
 }

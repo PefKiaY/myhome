@@ -1,16 +1,18 @@
 package com.home.cn.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.home.cn.utils.BeanUtils;
 import com.home.cn.mapper.HomeHousingRentMapper;
 import com.home.cn.model.HomeHousingRent;
 import com.home.cn.param.HomeHousingRentParam;
 import com.home.cn.resp.HomeHousingRentResp;
 import com.home.cn.service.HomeHousingRentService;
+import com.home.cn.utils.BeanUtils;
 
 @Service
 public class HomeHousingRentServiceImpl implements HomeHousingRentService{
@@ -24,6 +26,22 @@ public class HomeHousingRentServiceImpl implements HomeHousingRentService{
 		List<HomeHousingRent> list = mapper.query(param);
 		List<HomeHousingRentResp> respList = BeanUtils.copyPropertiesByClass(HomeHousingRentResp.class, list);
 		return respList;
+	}
+	
+	@Override
+	public List<HomeHousingRentResp> query(HomeHousingRentParam param, int skipResults, int maxResults) {
+		
+		RowBounds rowBounds = maxResults > 0 ? new RowBounds(skipResults, maxResults) : new RowBounds();
+		List<HomeHousingRentResp> list = new ArrayList<>();
+		list = BeanUtils.copyPropertiesByClass(HomeHousingRentResp.class, mapper.query(param, rowBounds));
+				
+		return list;
+	}
+
+	@Override
+	public int count(HomeHousingRentParam param) {
+		
+		return mapper.count(param);
 	}
 
 	@Override

@@ -1,6 +1,8 @@
 package com.home.cn.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 import java.util.List;
@@ -19,6 +21,7 @@ import com.home.cn.resp.HomeHousingRentResp;
 import com.home.cn.service.HomeHousingRentService;
 import com.zhcx.itbus.common.ReturnObject;
 import com.zhcx.itbus.common.controller.BaseController;
+import com.zhcx.platform.pagination.PageBean;
 
 @RestController
 @RequestMapping("/homehousingrent")
@@ -32,29 +35,43 @@ public class HomeHousingRentController extends BaseController{
 	
 	@RequestMapping(value = "/{uuid,plotCode,plotName}", method = RequestMethod.GET)
 	@ApiOperation(httpMethod = "GET",value = "获取信息")
-	public List<HomeHousingRentResp> query(
+	@ApiImplicitParams(value = {
+			@ApiImplicitParam(name = "pageNo", value = "页码", required = false, paramType = "query", dataType = "String"),
+			@ApiImplicitParam(name = "pageSize", value = "分页大小", required = false, paramType = "query", dataType = "String")})
+	public ReturnObject<List<HomeHousingRentResp>> query(
 			@RequestParam(value = "uuid", required = false)  String uuid , 
 			@RequestParam(value = "plotCode", required = false) String plotCode,
-			@RequestParam(value = "plotName", required = false) String plotName
+			@RequestParam(value = "plotName", required = false) String plotName,
+			@RequestParam(value = "pageSize",required = false) String pageSize,
+			@RequestParam(value = "pageNo",required = false) String pageNo
 			){
 		List<HomeHousingRentResp> respList = null;
-		try {
-			HomeHousingRentParam param = new HomeHousingRentParam();
-			if(plotCode != null && !"".equals(plotCode)){
-				param.setPlotCode(Long.parseLong(plotCode));
-			}
-			if(plotName != null && !"".equals(plotName)){
-				param.setPlotName(plotName);
-			}
-			if(uuid != null && !"".equals(uuid)){
-				param.setUuid(Long.parseLong(uuid));
-			}
-			respList = service.query(param);
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			logger.error("查询失败"+e.getMessage());
+		PageBean pageBean = null;
+		ReturnObject<List<HomeHousingRentResp>> ro = new ReturnObject<List<HomeHousingRentResp>>();
+		
+		HomeHousingRentParam param = new HomeHousingRentParam();
+		if(plotCode != null && !"".equals(plotCode)){
+			param.setPlotCode(Long.parseLong(plotCode));
 		}
-		return respList;
+		if(plotName != null && !"".equals(plotName)){
+			param.setPlotName(plotName);
+		}
+		if(uuid != null && !"".equals(uuid)){
+			param.setUuid(Long.parseLong(uuid));
+		}
+		//判断分页参数是否为空或者为-2 不是进行分页
+		if ("-2".equals(pageSize) || pageSize == null || pageNo == null){
+			respList = service.query(param);
+		} else {
+			int total = service.count(param);
+			pageBean = new PageBean(Integer.parseInt(pageNo), Integer.parseInt(pageSize), total);
+			respList = service.query(param, pageBean.getOffset(), pageBean.getPageSize());
+		}
+		
+		ro.setData(respList);
+		ro.setPageBean(pageBean);
+
+		return ro;
 	}
 	
 	@RequestMapping(value = "/{HomeHousingRentParam}", method = RequestMethod.POST)

@@ -1,6 +1,8 @@
 package com.home.cn.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 
 import java.util.List;
@@ -22,6 +24,7 @@ import com.home.cn.utils.Md5Tool;
 import com.home.cn.utils.MobUtils;
 import com.zhcx.itbus.common.ReturnObject;
 import com.zhcx.itbus.common.controller.BaseController;
+import com.zhcx.platform.pagination.PageBean;
 
 @RestController
 @RequestMapping("/homeuser")
@@ -35,14 +38,22 @@ public class HomeAuthUserController extends BaseController{
 	
 	@RequestMapping(value = "/{uuid,plotCode,plotName,loginName}", method = RequestMethod.GET)
 	@ApiOperation(httpMethod = "GET",value = "查询用户信息")
-	public List<HomeAuthUserResp> query(
+	@ApiImplicitParams(value = {
+			@ApiImplicitParam(name = "pageNo", value = "页码", required = false, paramType = "query", dataType = "String"),
+			@ApiImplicitParam(name = "pageSize", value = "分页大小", required = false, paramType = "query", dataType = "String")})
+	public ReturnObject<List<HomeAuthUserResp>> query(
 			@RequestParam(value = "uuid", required = false)  String uuid , 
 			@RequestParam(value = "plotCode", required = false) String plotCode,
 			@RequestParam(value = "plotName", required = false) String plotName,
-			@RequestParam(value = "loginName", required = false) String loginName
+			@RequestParam(value = "loginName", required = false) String loginName,
+			@RequestParam(value = "pageSize",required = false) String pageSize,
+			@RequestParam(value = "pageNo",required = false) String pageNo
 			){
+		
+		PageBean pageBean = null;
 		List<HomeAuthUserResp> respList = null;
-		try {
+		ReturnObject<List<HomeAuthUserResp>> ro = new ReturnObject<List<HomeAuthUserResp>>();
+		
 			HomeAuthUserParam param = new HomeAuthUserParam();
 			if(plotCode != null && !"".equals(plotCode)){
 				param.setPlotCode(Long.parseLong(plotCode));
@@ -56,7 +67,15 @@ public class HomeAuthUserController extends BaseController{
 			if(uuid != null && !"".equals(uuid)){
 				param.setUuid(Long.parseLong(uuid));
 			}
-			respList = service.query(param);
+			
+			int total = service.count(param);
+			//判断分页参数是否为空或者为-2 不是进行分页
+			if ("-2".equals(pageSize) || pageSize == null || pageNo == null){
+				respList = service.query(param);
+			} else {
+				pageBean = new PageBean(Integer.parseInt(pageNo), Integer.parseInt(pageSize), total);
+				respList = service.query(param, pageBean.getOffset(), pageBean.getPageSize());
+			}
 			
 			if(null != respList) {
 				for (HomeAuthUserResp resp: respList) {
@@ -64,11 +83,10 @@ public class HomeAuthUserController extends BaseController{
 				}
 			}
 			
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			logger.error("查询失败"+e.getMessage());
-		}
-		return respList;
+			ro.setData(respList);
+			ro.setPageBean(pageBean);
+
+		return ro;
 	}
 	@RequestMapping(value = "/{loginName, password}", method = RequestMethod.GET)
 	@ApiOperation(httpMethod = "GET",value = "登陆信息")

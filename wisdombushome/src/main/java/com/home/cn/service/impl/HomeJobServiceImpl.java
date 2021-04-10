@@ -1,16 +1,18 @@
 package com.home.cn.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.home.cn.utils.BeanUtils;
 import com.home.cn.mapper.HomeJobMapper;
 import com.home.cn.model.HomeJob;
 import com.home.cn.param.HomeJobParam;
 import com.home.cn.resp.HomeJobResp;
 import com.home.cn.service.HomeJobService;
+import com.home.cn.utils.BeanUtils;
 
 @Service
 public class HomeJobServiceImpl implements HomeJobService{
@@ -24,6 +26,22 @@ public class HomeJobServiceImpl implements HomeJobService{
 		List<HomeJob> list = mapper.query(param);
 		List<HomeJobResp> respList = BeanUtils.copyPropertiesByClass(HomeJobResp.class, list);
 		return respList;
+	}
+	
+	@Override
+	public List<HomeJobResp> query(HomeJobParam param, int skipResults, int maxResults) {
+		
+		RowBounds rowBounds = maxResults > 0 ? new RowBounds(skipResults, maxResults) : new RowBounds();
+		List<HomeJobResp> list = new ArrayList<>();
+		list = BeanUtils.copyPropertiesByClass(HomeJobResp.class, mapper.query(param, rowBounds));
+				
+		return list;
+	}
+
+	@Override
+	public int count(HomeJobParam param) {
+		
+		return mapper.count(param);
 	}
 
 	@Override
