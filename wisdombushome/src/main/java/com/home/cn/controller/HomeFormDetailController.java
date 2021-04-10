@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.home.cn.param.HomeFormDetailParam;
 import com.home.cn.resp.HomeFormDetailResp;
 import com.home.cn.service.HomeFormDetailService;
+import com.zhcx.itbus.common.BaseController;
 import com.zhcx.itbus.common.ReturnObject;
-import com.zhcx.itbus.common.controller.BaseController;
 import com.zhcx.platform.pagination.PageBean;
 
 @RestController

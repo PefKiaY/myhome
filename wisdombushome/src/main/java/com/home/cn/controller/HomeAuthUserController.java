@@ -22,8 +22,8 @@ import com.home.cn.service.HomeAuthUserService;
 import com.home.cn.utils.BeanUtils;
 import com.home.cn.utils.Md5Tool;
 import com.home.cn.utils.MobUtils;
+import com.zhcx.itbus.common.BaseController;
 import com.zhcx.itbus.common.ReturnObject;
-import com.zhcx.itbus.common.controller.BaseController;
 import com.zhcx.platform.pagination.PageBean;
 
 @RestController

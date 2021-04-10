@@ -1,4 +1,4 @@
-package com.zhcx.platform.pagination.dialect;
+package com.zhcx.platform.pagination;
 
 
 public class MySql5Dialect extends Dialect{

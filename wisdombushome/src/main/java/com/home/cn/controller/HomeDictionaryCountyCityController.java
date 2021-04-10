@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.home.cn.param.HomeDictionaryCountyCityParam;
 import com.home.cn.resp.HomeDictionaryCountyCityResp;
 import com.home.cn.service.HomeDictionaryCountyCityService;
+import com.zhcx.itbus.common.BaseController;
 import com.zhcx.itbus.common.ReturnObject;
-import com.zhcx.itbus.common.controller.BaseController;
 
 @RestController
 @RequestMapping("/homecounty")

@@ -1,4 +1,4 @@
-package com.zhcx.platform.pagination.dialect;
+package com.zhcx.platform.pagination;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;

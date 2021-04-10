@@ -1,4 +1,4 @@
-package com.zhcx.commons.authority.bean.session;
+package com.zhcx.itbus.common;
 
 import java.io.Serializable;
 import java.util.Date;

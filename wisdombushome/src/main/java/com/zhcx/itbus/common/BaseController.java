@@ -1,4 +1,4 @@
-package com.zhcx.itbus.common.controller;
+package com.zhcx.itbus.common;
 
 /*
  *  

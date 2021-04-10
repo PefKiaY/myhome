@@ -22,10 +22,6 @@ import org.apache.ibatis.reflection.wrapper.ObjectWrapperFactory;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.RowBounds;
 
-import com.zhcx.platform.pagination.dialect.Dialect;
-import com.zhcx.platform.pagination.dialect.MySql5Dialect;
-import com.zhcx.platform.pagination.dialect.OracleDialect;
-
 /**
  * Copyright dayhr2013-2014 All rights reserved
  * 
