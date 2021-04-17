@@ -83,14 +83,17 @@ public class HomeShopController extends BaseController{
 			int rows= service.insert(param);
 			if(rows > 0 ){
 				ro.setResultDesc("增加成功");
+				
 			}else{
 				ro.setStatusCode("1");
 				ro.setResult("false");
 				ro.setResultDesc("增加失败");
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			logger.error("添加失败"+e.getMessage());
+			ro.setStatusCode("1");
+			ro.setResult("false");
+			ro.setResultDesc("增加失败");
 		}
 		return ro;
 	}

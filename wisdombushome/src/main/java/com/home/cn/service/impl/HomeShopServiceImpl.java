@@ -49,11 +49,6 @@ public class HomeShopServiceImpl implements HomeShopService{
 		// TODO Auto-generated method stub
 		HomeShop record = BeanUtils.copyProperties(HomeShop.class, param);
 		int rows = mapper.insertSelective(record);
-		/*List<HomeShopResp> respList = null;
-		if(rows > 0){
-			respList = this.query(param);
-		}
-		return respList.get(0);*/
 		return rows;
 	}
 

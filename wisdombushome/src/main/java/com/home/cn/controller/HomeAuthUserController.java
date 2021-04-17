@@ -242,25 +242,37 @@ public class HomeAuthUserController extends BaseController{
 				return ro;
 			}
 			
-			String resultCode = MobUtils.requestData(loginName, mobCode);
-			if(resultCode.indexOf("200") == -1) {
-				ro.setStatusCode("1");
-				ro.setResult("false");
-				ro.setResultDesc("验证码错误");
-				return ro;
-			} 
+//			String resultCode = MobUtils.requestData(loginName, mobCode);
+//			if(resultCode.indexOf("200") == -1) {
+//				ro.setStatusCode("1");
+//				ro.setResult("false");
+//				ro.setResultDesc("验证码错误");
+//				return ro;
+//			} 
 			
 			param.setPassword(Md5Tool.getMd5(param.getPassword()));
 			int rows= service.insert(param);
-			if(rows > 0 ){
-				ro.setResultDesc("增加成功");
+			if(rows > 0 ){				
+				respList = service.query(homeParam);
+						
+				if(null == respList || respList.size()==0) {
+					ro.setStatusCode("1");
+					ro.setResult("false");
+					ro.setResultDesc("增加失败");
+					return ro;
+				} else {
+					HomeAuthUserResp data = respList.get(0);
+					ro.setData(data);
+					ro.setStatusCode("0");
+					ro.setResult("true");
+					ro.setResultDesc("增加成功");
+				}
 			} else {
 				ro.setStatusCode("1");
 				ro.setResult("false");
 				ro.setResultDesc("增加失败");
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			logger.error("添加失败"+e.getMessage());
 			ro.setStatusCode("1");
 			ro.setResult("false");
