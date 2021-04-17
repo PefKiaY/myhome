@@ -242,13 +242,13 @@ public class HomeAuthUserController extends BaseController{
 				return ro;
 			}
 			
-//			String resultCode = MobUtils.requestData(loginName, mobCode);
-//			if(resultCode.indexOf("200") == -1) {
-//				ro.setStatusCode("1");
-//				ro.setResult("false");
-//				ro.setResultDesc("验证码错误");
-//				return ro;
-//			} 
+			String resultCode = MobUtils.requestData(loginName, mobCode);
+			if(resultCode.indexOf("200") == -1) {
+				ro.setStatusCode("1");
+				ro.setResult("false");
+				ro.setResultDesc("验证码错误");
+				return ro;
+			} 
 			
 			param.setPassword(Md5Tool.getMd5(param.getPassword()));
 			int rows= service.insert(param);
