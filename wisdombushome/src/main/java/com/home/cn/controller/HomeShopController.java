@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.home.cn.param.HomeAuthUserParam;
 import com.home.cn.param.HomeShopParam;
 import com.home.cn.resp.HomeShopResp;
+import com.home.cn.service.HomeAuthUserService;
 import com.home.cn.service.HomeShopService;
 import com.zhcx.itbus.common.BaseController;
 import com.zhcx.itbus.common.ReturnObject;
@@ -32,6 +34,9 @@ public class HomeShopController extends BaseController{
 	
 	@Autowired
 	private HomeShopService service;
+	
+	@Autowired
+	private HomeAuthUserService userService;
 	
 	@RequestMapping(value = "/{shopId}", method = RequestMethod.GET)
 	@ApiOperation(httpMethod = "GET",value = "获取信息")
@@ -82,7 +87,21 @@ public class HomeShopController extends BaseController{
 		try {
 			int rows= service.insert(param);
 			if(rows > 0 ){
+				
+				HomeAuthUserParam userParam = new HomeAuthUserParam();
+				userParam.setUuid(param.getCreator());
+				HomeShopParam temp = new HomeShopParam();
+				temp.setCreator(param.getCreator());
+				List<HomeShopResp> respList = service.query(temp);				
+				if(null != respList && respList.size() > 0){
+					HomeShopResp resp = respList.get(0);
+					ro.setData(resp);
+					userParam.setShopId(resp.getShopId() + "");
+					userService.updae(userParam);
+				}
+				
 				ro.setResultDesc("增加成功");
+
 				
 			}else{
 				ro.setStatusCode("1");

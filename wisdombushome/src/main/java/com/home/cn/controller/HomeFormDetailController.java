@@ -33,7 +33,7 @@ public class HomeFormDetailController extends BaseController{
 	@Autowired
 	private HomeFormDetailService service;
 	
-	@RequestMapping(value = "/{uuid,plotCode,plotName}", method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET)
 	@ApiOperation(httpMethod = "GET",value = "获取信息")
 	@ApiImplicitParams(value = {
 			@ApiImplicitParam(name = "pageNo", value = "页码", required = false, paramType = "query", dataType = "String"),
