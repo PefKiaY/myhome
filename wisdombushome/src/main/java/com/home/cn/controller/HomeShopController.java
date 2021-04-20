@@ -119,15 +119,21 @@ public class HomeShopController extends BaseController{
 	
 	@RequestMapping(value = "/{HomeShopParam}", method = RequestMethod.PUT)
 	@ApiOperation(httpMethod = "PUT",value = "修改信息")
-	public HomeShopResp update(@RequestBody HomeShopParam param){
+	public ReturnObject<HomeShopResp> update(@RequestBody HomeShopParam param){
+		ReturnObject<HomeShopResp> ro = new ReturnObject<>();
 		HomeShopResp respLine = null;
 		try {
 			respLine = service.updae(param);
+			ro.setData(respLine);
+			ro.setResultDesc("修改成功");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			logger.error("修改失败"+e.getMessage());
+			ro.setStatusCode("1");
+			ro.setResult("false");
+			ro.setResultDesc("修改失败");
 		}
-		return respLine;
+		return ro;
 	}
 	
 	
