@@ -280,18 +280,24 @@ public class HomeAuthUserController extends BaseController {
 
 	@RequestMapping(value = "/{HomeAuthUserParam}", method = RequestMethod.PUT)
 	@ApiOperation(httpMethod = "PUT", value = "修改信息")
-	public HomeAuthUserResp update(@RequestBody HomeAuthUserParam param) {
-
+	public ReturnObject<HomeAuthUserResp> update(@RequestBody HomeAuthUserParam param) {
+		ReturnObject<HomeAuthUserResp> ro = new ReturnObject<>();
 		HomeAuthUserResp respLine = null;
 		try {
-
-			param.setPassword(Md5Tool.getMd5(param.getNewPassword()));
+			String newPassword = Md5Tool.getMd5(param.getNewPassword());
+			if (!newPassword.equals("")) {
+				param.setPassword(newPassword);
+			}
 			respLine = service.updae(param);
+			ro.setData(respLine);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
+			ro.setStatusCode("1");
+			ro.setResult("false");
+			ro.setResultDesc("修改失败");
 			logger.error("修改失败" + e.getMessage());
 		}
-		return respLine;
+		return ro;
 	}
 
 	@RequestMapping(value = "/{uuid}", method = RequestMethod.DELETE)
