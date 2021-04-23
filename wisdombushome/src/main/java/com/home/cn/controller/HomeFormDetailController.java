@@ -74,7 +74,7 @@ public class HomeFormDetailController extends BaseController{
 		return ro;
 	}
 	
-	@RequestMapping(value = "/{HomeFormDetailParam}", method = RequestMethod.POST)
+	@RequestMapping( method = RequestMethod.POST)
 	@ApiOperation(httpMethod = "POST", value = "新增信息")
 	public ReturnObject<HomeFormDetailResp> insert(@RequestBody HomeFormDetailParam param){
 		ReturnObject<HomeFormDetailResp> ro = new ReturnObject<>();
@@ -94,7 +94,7 @@ public class HomeFormDetailController extends BaseController{
 		return ro;
 	}
 	
-	@RequestMapping(value = "/{HomeFormDetailParam}", method = RequestMethod.PUT)
+	@RequestMapping(method = RequestMethod.PUT)
 	@ApiOperation(httpMethod = "PUT",value = "修改信息")
 	public HomeFormDetailResp update(@RequestBody HomeFormDetailParam param){
 		HomeFormDetailResp respLine = null;
@@ -108,7 +108,7 @@ public class HomeFormDetailController extends BaseController{
 	}
 	
 	
-	@RequestMapping(value = "/{uuid}", method = RequestMethod.DELETE)
+	@RequestMapping(method = RequestMethod.DELETE)
 	@ApiOperation(httpMethod = "DELETE",value = "删除指定信息")
 	public ReturnObject<HomeFormDetailResp> delete(
 			@RequestParam(value = "uuid", required = false) String uuid){
